@@ -1,22 +1,108 @@
 @mixin mainColorTypography() {
+  font-family: var(--font-family-primary);
+  font-style: normal;
   color: var(--dark-900, #000);
+}
+
+@mixin mainColorTypographyLink() {
+  font-family: var(--font-family-primary);
+  font-style: normal;
+  color: var(--primary-500, #397df6);
+  text-decoration-line: underline;
 }
 
 .large {
   @include mainColorTypography;
 
-  font-family: Roboto, sans-serif;
-  font-size: 26px;
-  font-weight: 700;
-  font-style: normal;
-  line-height: 36px;
+  font-size: var(--font-size-xxl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-l);
 }
 
-h1 {
-  color: var(--dark-900, #000);
-  font-family: Roboto, sans-serif;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 36px; /
+.h1 {
+  @include mainColorTypography;
+
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-l);
+}
+
+.h2 {
+  @include mainColorTypography;
+
+  font-size: var(--font-size-l);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-m);
+}
+
+.H3 {
+  @include mainColorTypography;
+
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-m);
+}
+
+.Body1 {
+  @include mainColorTypography;
+
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-m);
+}
+
+.Subtitle1 {
+  @include mainColorTypography;
+
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-m);
+}
+
+.Body2 {
+  @include mainColorTypography;
+
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-m);
+}
+
+.Subtitle2 {
+  @include mainColorTypography;
+
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-m);
+}
+
+.Caption {
+  @include mainColorTypography;
+
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-s);
+}
+
+.Overline {
+  @include mainColorTypography;
+
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-s);
+}
+
+.Link1 {
+  @include mainColorTypographyLink;
+
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-m);
+}
+
+.Link2 {
+  @include mainColorTypographyLink;
+
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-s);
 }
