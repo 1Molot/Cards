@@ -7,7 +7,7 @@ export type CheckboxPropsType = Omit<DefaultInputPropsType, 'type'> & {
   onChangeChecked?: (checked: boolean) => void
   spanClassName?: string
   className?: string
-  onChange?: () => void // Make onChange optional
+  onChange?: () => void
   id: string
   label?: string
 }
