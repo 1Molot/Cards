@@ -1,0 +1,22 @@
+@mixin mainColorTypography() {
+  color: var(--dark-900, #000);
+}
+
+.large {
+  @include mainColorTypography;
+
+  font-family: Roboto, sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 36px;
+}
+
+h1 {
+  color: var(--dark-900, #000);
+  font-family: Roboto, sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 36px; /
+}
