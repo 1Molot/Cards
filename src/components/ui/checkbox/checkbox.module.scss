@@ -1,39 +1,43 @@
-@import '@radix-ui/colors/black-alpha.css';
-@import '@radix-ui/colors/violet.css';
+.checkbox {
+  cursor: pointer;
 
-/* reset */
-button {
-  all: unset;
-}
-
-.CheckboxRoot {
   display: flex;
   align-items: center;
-  justify-content: center;
 
-  width: 25px;
-  height: 25px;
+  margin-bottom: 8px;
 
-  background-color: white;
+  font-size: 16px;
+}
+
+.checkbox input {
+  cursor: pointer;
+  position: absolute;
+  opacity: 0;
+}
+
+.checkmark {
+  position: relative;
+
+  width: 24px;
+  height: 24px;
+
+  border: 2px solid #333;
   border-radius: 4px;
-  box-shadow: 0 2px 10px var(--black-a7);
 }
 
-.CheckboxRoot:hover {
-  background-color: var(--violet-3);
+.checkbox input:checked ~ .checkmark {
+  background-color: #333;
 }
 
-.CheckboxRoot:focus {
-  box-shadow: 0 0 0 2px black;
+.checkbox input:focus ~ .checkmark {
+  box-shadow: 0 0 3px #333;
 }
 
-.CheckboxIndicator {
-  color: var(--violet-11);
+.checkbox input:hover:not(:checked) ~ .checkmark {
+  background-color: #f2f2f2;
 }
 
-.Label {
-  padding-left: 15px;
-  font-size: 15px;
-  line-height: 1;
-  color: white;
+.checkbox.disabled {
+  pointer-events: none;
+  opacity: 0.6;
 }
