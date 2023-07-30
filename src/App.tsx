@@ -1,15 +1,13 @@
-import { Link } from 'react-router-dom'
-
+import { Header } from './components/header/header.tsx'
 import { Button } from './components/ui/button'
 import { Typography } from './components/ui/typography'
 
 export function App() {
   return (
     <div>
-      <Button as={Link} to={'/home'} variant={'secondary'}>
-        Go home
-      </Button>
-      <Typography variant={'H1'}></Typography>
+      <Button variant={'secondary'}>Go home</Button>
+      <Typography variant="H1">Maksim</Typography>
+      <Header isAuth={true} />
     </div>
   )
 }
