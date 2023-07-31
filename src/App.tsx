@@ -1,5 +1,5 @@
-import { Header } from './components/header/header.tsx'
 import { Button } from './components/ui/button'
+import { Header } from './components/ui/header/header.tsx'
 import { Typography } from './components/ui/typography'
 
 export function App() {

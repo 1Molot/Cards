@@ -1,43 +1,96 @@
-.checkbox {
-  cursor: pointer;
-
+.checkBoxBlock {
   display: flex;
   align-items: center;
 
-  margin-bottom: 8px;
+  button {
+    all: unset;
+  }
 
-  font-size: 16px;
-}
+  .checkboxRoot {
+    cursor: pointer;
 
-.checkbox input {
-  cursor: pointer;
-  position: absolute;
-  opacity: 0;
-}
+    position: relative;
 
-.checkmark {
-  position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  width: 24px;
-  height: 24px;
+    width: 1.5rem;
+    height: 1.5rem;
 
-  border: 2px solid #333;
-  border-radius: 4px;
-}
+    border: 2px solid var(--color-light-900);
+    border-radius: 0.25rem;
 
-.checkbox input:checked ~ .checkmark {
-  background-color: #333;
-}
+    &:focus {
+      &::before {
+        content: '';
 
-.checkbox input:focus ~ .checkmark {
-  box-shadow: 0 0 3px #333;
-}
+        position: absolute;
+        z-index: -1;
 
-.checkbox input:hover:not(:checked) ~ .checkmark {
-  background-color: #f2f2f2;
-}
+        width: calc(100% + 25px);
+        height: calc(100% + 25px);
 
-.checkbox.disabled {
-  pointer-events: none;
-  opacity: 0.6;
+        background-color: var(--color-dark-100);
+        border-radius: 50%;
+      }
+    }
+
+    &:disabled {
+      background-color: var(--color-dark-100);
+    }
+
+    &:not(:disabled) {
+      &:hover {
+        &::before {
+          content: '';
+
+          position: absolute;
+          z-index: -1;
+
+          width: calc(100% + 1.5625rem);
+          height: calc(100% + 1.5625rem);
+
+          background-color: var(--color-dark-500);
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+
+  .active {
+    background-color: var(--color-light-100);
+
+    .checkboxIndicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-dark-900);
+
+      .icon {
+        width: 1.55rem;
+        height: 1.55rem;
+      }
+    }
+  }
+
+  .unActive {
+    background-color: transparent;
+  }
+
+  .checkboxRoot:disabled .checkboxIndicator {
+    color: var(--color-light-700);
+  }
+
+  .label {
+    cursor: pointer;
+    user-select: none;
+    margin-left: 0.75rem;
+  }
+
+  .labelDisabled {
+    p {
+      color: var(--color-light-700);
+    }
+  }
 }

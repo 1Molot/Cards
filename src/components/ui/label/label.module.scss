@@ -1,0 +1,23 @@
+.label {
+  cursor: pointer;
+
+  display: inline-block;
+
+  margin-bottom: 1px;
+
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-m);
+}
+
+.primary {
+  color: var(--color-light-100);
+}
+
+.secondary {
+  color: var(--color-dark-100);
+}
+
+.disabled {
+  color: var(--color-dark-300);
+}

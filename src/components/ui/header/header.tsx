@@ -1,10 +1,8 @@
 import { FC } from 'react'
 
-//import { Logo } from '../../../common/assets/img'
-
-import { Logo } from '../../assets/image/logo.tsx'
-import { Button } from '../ui/button'
-import { Typography } from '../ui/typography'
+import { Logo } from '../../../assets/image'
+import { Button } from '../button'
+import { Typography } from '../typography'
 
 import s from './header.module.scss'
 

@@ -8,6 +8,7 @@
 //   email: string
 //   password: string
 //   rememberMe: boolean
+
 // }
 // const emailRegex =
 //   /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/
@@ -61,7 +62,7 @@
 //         label={'password'}
 //       />
 //       <Checkbox checked={value} onValueChange={onChange} label={'remember me'} />
-//       <Button type="submit">Submit</Button>
+//       <Button option="primer" type="submit">Submit</Button>
 //     </form>
 //   )
 // }
