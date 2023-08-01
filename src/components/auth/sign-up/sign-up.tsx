@@ -4,7 +4,7 @@ import { z } from 'zod'
 
 import { Button } from '../../ui/button'
 import { Card } from '../../ui/card'
-import { ControlledCheckbox, ControlledTextField } from '../../ui/controlled'
+import { ControlledTextField } from '../../ui/controlled'
 import { Typography } from '../../ui/typography'
 
 import s from './sign-up.module.scss'
@@ -32,7 +32,9 @@ export const SignUp = () => {
 
   return (
     <Card className={s.signUpWrapper}>
-      <Typography variant={'large'}>Sign Up</Typography>
+      <Typography variant={'large'} className={s.typo}>
+        Sign Up
+      </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <ControlledTextField
           className={s.field}
@@ -51,27 +53,29 @@ export const SignUp = () => {
           control={control}
         />
         <ControlledTextField
-          className={s.field}
+          className={`${s.field} ${s.fieldBottom}`}
           errorMessage={errors.confirmPassword?.message}
           label={'Confirm Password'}
           name={'confirmPassword'}
           type={'password'}
           control={control}
         />
-        <ControlledCheckbox
-          control={control}
-          name={'acceptTerms'}
-          variant={'withText'}
-          checkBoxText={'I accept the terms and conditions'}
-        />
+        {/*<ControlledCheckbox*/}
+        {/*  control={control}*/}
+        {/*  name={'acceptTerms'}*/}
+        {/*  variant={'withText'}*/}
+        {/*  checkBoxText={'I accept the terms and conditions'}*/}
+        {/*/>*/}
 
         <Button fullWidth={true} className={s.submit} type="submit">
           Sign Up
         </Button>
       </form>
-      <Typography variant={'Body2'}>Already have an account?</Typography>
-      <Button as={'a'} variant={'link'} className={s.signIn}>
-        Sign Up
+      <Typography variant={'Body2'} className={s.typo}>
+        Already have an account?
+      </Typography>
+      <Button as={'a'} variant={'link'} className={s.signUp}>
+        Sign In
       </Button>
     </Card>
   )

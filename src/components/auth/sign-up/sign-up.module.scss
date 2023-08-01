@@ -4,6 +4,10 @@
   width: 424px;
   padding: 32px 36px;
 
+  .typo {
+    text-align: center;
+  }
+
   .title {
     margin-bottom: 26px;
     text-align: center;
@@ -21,14 +25,8 @@
     display: none;
   }
 
-  .forgotWrapper {
-    display: flex;
-    justify-content: right;
+  .fieldBottom {
     margin-bottom: 66px;
-
-    & a {
-      padding: 6px 0;
-    }
   }
 
   .question {
@@ -37,6 +35,7 @@
   }
 
   .signUp {
+    text-align: center;
     text-decoration: underline;
 
     & p {

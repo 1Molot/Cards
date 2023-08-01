@@ -75,6 +75,8 @@
       .listItem {
         cursor: pointer;
 
+        //padding: 6px 8px;
+
         &:hover {
           color: var(--color-accent-300);
           background-color: var(--color-accent-900);

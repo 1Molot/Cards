@@ -1,7 +1,8 @@
 @mixin mainColorTypography() {
   font-family: var(--font-family-primary);
   font-style: normal;
-  color: var(--dark-900, #000);
+
+  //color: var(--dark-900, #000);
 }
 
 @mixin mainColorTypographyLink() {
