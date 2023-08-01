@@ -1,4 +1,4 @@
-.signInWrapper {
+.signUpWrapper {
   display: flex;
   flex-direction: column;
   width: 424px;
@@ -36,7 +36,7 @@
     text-align: center;
   }
 
-  .signIn {
+  .signUp {
     text-decoration: underline;
 
     & p {

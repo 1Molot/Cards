@@ -29,7 +29,7 @@ export const SignIn = () => {
   }
 
   return (
-    <Card className={s.signWrapper}>
+    <Card className={s.signInWrapper}>
       <Typography variant={'large'}>Sign In</Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <ControlledTextField
@@ -65,8 +65,8 @@ export const SignIn = () => {
         </Button>
       </form>
       <Typography variant={'Body2'}>Already have an account?</Typography>
-      <Button as={'a'} variant={'link'} className={s.signUp}>
-        Sign Up
+      <Button as={'a'} variant={'link'} className={s.signIn}>
+        Sign In
       </Button>
     </Card>
   )

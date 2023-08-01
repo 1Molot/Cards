@@ -2,9 +2,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { Typography, Button, Card } from '../../ui'
-import { ControlledTextField } from '../../ui/controled/conrolled-textFild'
-import { ControlledCheckbox } from '../../ui/controled/controled-checkbox'
+import { Button } from '../../ui/button'
+import { Card } from '../../ui/card'
+import { ControlledCheckbox, ControlledTextField } from '../../ui/controlled'
+import { Typography } from '../../ui/typography'
 
 import s from './sign-up.module.scss'
 
@@ -30,7 +31,7 @@ export const SignUp = () => {
   }
 
   return (
-    <Card className={s.signBlock}>
+    <Card className={s.signUpWrapper}>
       <Typography variant={'large'}>Sign Up</Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <ControlledTextField
@@ -68,9 +69,9 @@ export const SignUp = () => {
           Sign Up
         </Button>
       </form>
-      <Typography variant={'body2'}>Already have an account?</Typography>
+      <Typography variant={'Body2'}>Already have an account?</Typography>
       <Button as={'a'} variant={'link'} className={s.signIn}>
-        Sign In
+        Sign Up
       </Button>
     </Card>
   )
