@@ -70,7 +70,7 @@ export const SignIn = () => {
         Already have an account?
       </Typography>
       <Button as={'a'} variant={'link'} className={s.signIn}>
-        Sign In
+        Sign Up
       </Button>
     </Card>
   )

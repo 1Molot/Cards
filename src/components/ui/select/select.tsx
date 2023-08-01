@@ -27,7 +27,10 @@ export const SelectDemo: FC<PropsType> = ({ isDisabled, onChangeOption, options,
           {options?.map(o => (
             <Listbox.Option className={s.list} key={o.id} value={o}>
               {({ disabled }) => (
-                <Typography className={`${disabled ? s.listItemDisabled : s.listItem}`}>
+                <Typography
+                  variant={'Body1'}
+                  className={`${disabled ? s.listItemDisabled : s.listItem}`}
+                >
                   {o.value}
                 </Typography>
               )}
