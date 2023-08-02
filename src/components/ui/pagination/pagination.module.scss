@@ -1,4 +1,4 @@
-.root {
+.wrap {
   display: flex;
   gap: 25px;
   align-items: center;
@@ -10,7 +10,7 @@
   list-style-type: none;
 }
 
-@mixin item {
+@mixin item() {
   all: unset;
 
   display: flex;
@@ -40,12 +40,12 @@
   }
 
   &:hover:not(&:disabled) {
-    background-color: var(--color-bg-focus);
+    background-color: blue;
   }
 
   &.selected {
-    color: var(--color-text-primary-contrast);
-    background-color: var(--color-bg-contrast);
+    color: red;
+    background-color: green;
   }
 }
 
@@ -65,11 +65,16 @@
   gap: 12px;
   align-items: center;
 
-  color: var(--color-text-primary);
+  color: var(--color-light-100);
   white-space: nowrap;
-}
 
-.select {
-  flex-shrink: 0;
-  width: 50px;
+  .select {
+    flex-shrink: 0;
+    width: 150px;
+
+    div {
+      color: var(--color-light-100);
+      background-color: var(--color-dark-700);
+    }
+  }
 }

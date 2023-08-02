@@ -68,8 +68,8 @@ export const Pagination: FC<PaginationProps> = ({
   const showPerPageSelect = !!perPage && !!perPageOptions && !!onPerPageChange
 
   return (
-    <div className={classNames.root}>
-      <div className={classNames.container}>
+    <div className={s.wrap}>
+      <div className={s.container}>
         <PrevButton onClick={handlePreviousPageClicked} disabled={isFirstPage} />
 
         <MainPaginationButtons
@@ -105,7 +105,7 @@ type PageButtonProps = NavigationButtonProps & {
 }
 
 const Dots: FC = () => {
-  return <span className={classNames.dots}>&#8230;</span>
+  return <span className={s.dots}>&#8230;</span>
 }
 const PageButton: FC<PageButtonProps> = ({ onClick, disabled, selected, page }) => {
   return (
@@ -120,16 +120,16 @@ const PageButton: FC<PageButtonProps> = ({ onClick, disabled, selected, page }) 
 }
 const PrevButton: FC<NavigationButtonProps> = ({ onClick, disabled }) => {
   return (
-    <button className={classNames.item} onClick={onClick} disabled={disabled}>
-      <BiChevronLeft className={classNames.icon} size={16} />
+    <button className={s.item} onClick={onClick} disabled={disabled}>
+      <BiChevronLeft className={s.icon} size={16} />
     </button>
   )
 }
 
 const NextButton: FC<NavigationButtonProps> = ({ onClick, disabled }) => {
   return (
-    <button className={classNames.item} onClick={onClick} disabled={disabled}>
-      <BiChevronRight className={classNames.icon} size={16} />
+    <button className={s.item} onClick={onClick} disabled={disabled}>
+      <BiChevronRight className={s.icon} size={16} />
     </button>
   )
 }
@@ -177,10 +177,10 @@ export const PerPageSelect: FC<PerPageSelectProps> = ({
   }))
 
   return (
-    <div className={classNames.selectBox}>
+    <div className={s.selectBox}>
       Показать
       <Select
-        className={classNames.select}
+        className={s.select}
         value={perPage}
         options={selectOptions}
         onChange={onPerPageChange}
