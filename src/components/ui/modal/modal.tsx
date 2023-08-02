@@ -9,7 +9,10 @@ import {
   DialogTitle,
 } from '@radix-ui/react-dialog'
 
+import { Close } from '../../../assets/image'
 import { Typography } from '../typography'
+
+import s from './modal.module.scss'
 
 type PropsType = {
   open: boolean
@@ -33,14 +36,20 @@ export const Modal: FC<PropsType> = ({
     <Dialog open={open} onOpenChange={handleModalClosed}>
       {open && (
         <DialogPortal>
-          <DialogOverlay />
-          <DialogContent>
-            <header>
+          <DialogOverlay className={s.overlay} />
+          <DialogContent className={s.content}>
+            <header className={s.header}>
               <DialogTitle asChild>
                 <Typography variant={'H2'}>{title}</Typography>
               </DialogTitle>
+
+              {showCloseButton && (
+                <DialogClose className={s.closeButton}>
+                  <Close />
+                </DialogClose>
+              )}
             </header>
-            <div>{children}</div>
+            <div className={s.contentBox}>{children}</div>
           </DialogContent>
         </DialogPortal>
       )}
