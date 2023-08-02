@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import { ActionMeta, SingleValue } from 'react-select'
 
 import { Pagination } from './'
 
@@ -15,8 +16,9 @@ type Story = StoryObj<typeof meta>
 const onChangePaginatorFake = (page: number) => {
   console.log(page)
 }
-const onPerPageFake = (page: number) => {
-  console.log(page)
+const onPerPageFake = (newValue: SingleValue<number>, actionMeta: ActionMeta<number>) => {
+  console.log(newValue)
+  console.log(actionMeta)
 }
 
 export const PaginationStory: Story = {

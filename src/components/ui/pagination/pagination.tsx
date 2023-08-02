@@ -2,6 +2,7 @@ import { FC } from 'react'
 
 import { clsx } from 'clsx'
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi'
+import Select, { ActionMeta, SingleValue } from 'react-select'
 
 import s from './pagination.module.scss'
 import { usePagination } from './usePagination'
@@ -15,7 +16,7 @@ type PaginationConditionals =
   | {
       perPage: number
       perPageOptions: number[]
-      onPerPageChange: (itemPerPage: number) => void
+      onPerPageChange: (newValue: SingleValue<number>, actionMeta: ActionMeta<number>) => void
     }
 
 export type PaginationProps = {
@@ -25,7 +26,7 @@ export type PaginationProps = {
   siblings?: number
   perPage?: number
   perPageOptions?: number[]
-  onPerPageChange?: (itemPerPage: number) => void
+  onPerPageChange?: (newValue: SingleValue<number>, actionMeta: ActionMeta<number>) => void
 } & PaginationConditionals
 
 const classNames = {
@@ -160,35 +161,54 @@ const MainPaginationButtons: FC<MainPaginationButtonsProps> = ({
 }
 
 export type PerPageSelectProps = {
-  perPage: number
+  perPage?: number
   perPageOptions: number[]
-  onPerPageChange: (itemPerPage: number) => void
+  onPerPageChange?: (newValue: SingleValue<number>, actionMeta: ActionMeta<number>) => void
 }
 
-export const PerPageSelect: FC<PerPageSelectProps> = (
-  {
-    // perPage,
-    //perPageOptions,
-    // onPerPageChange,
-  }
-) => {
-  // const selectOptions = perPageOptions.map(value => ({
-  //  label: value,
-  //  value,
-  //}))
+export const PerPageSelect: FC<PerPageSelectProps> = ({
+  perPage,
+  perPageOptions,
+  onPerPageChange,
+}) => {
+  const selectOptions = perPageOptions.map((value, i) => ({
+    label: i + '',
+    options: [value],
+  }))
 
-  return null
+  return (
+    <div className={classNames.selectBox}>
+      Показать
+      <Select
+        className={classNames.select}
+        value={perPage}
+        options={selectOptions}
+        onChange={onPerPageChange}
+      />
+      на странице
+    </div>
+  )
 }
-//   return (
-//     <div className={classNames.selectBox}>
-//       Показать
-//       <Select
-//         className={classNames.select}
-//         value={perPage}
-//         options={selectOptions}
-//         onChange={onPerPageChange}
-//         variant="pagination"
-//       />
-//       на странице
-//     </div>
-//   )
+
+// return (
+//   <div className={classNames.selectBox}>
+//     Показать
+//     <Select
+//       className={classNames.select}
+//       value={perPage}
+//       options={selectOptions}
+//       onChange={onPerPageChange}
+//       variant="pagination"
+//     />
+//     на странице
+//   </div>
+// )
+
+// <Pagination
+//     count={100}
+//     page={1}
+//     onChange={handlePageChange}
+//     perPage={10}
+//     perPageOptions={[10, 20, 50]}
+//     onPerPageChange={handlePerPageChange}
+// />
