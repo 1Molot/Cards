@@ -14,14 +14,14 @@ import { Typography } from '../typography'
 
 import s from './modal.module.scss'
 
-type PropsType = {
+type ModalType = {
   open: boolean
   onClose?: () => void
   showCloseButton?: boolean
   title?: string
 } & ComponentProps<'div'>
 
-export const Modal: FC<PropsType> = ({
+export const Modal: FC<ModalType> = ({
   open = false,
   title,
   onClose,
