@@ -41,15 +41,18 @@ export const ForgotPassword = () => {
           type={'default'}
           control={control}
         />
+        <div className={s.instructions}>
+          Enter your email address and we will send you further instructions
+        </div>
         <Button fullWidth={true} className={s.submit} type="submit">
-          Reset Password
+          Send instructions
         </Button>
       </form>
       <Typography variant={'Body2'} className={s.typo}>
-        Remember your password?
+        Did you remember your password?
       </Typography>
       <Button as={'a'} variant={'link'} className={s.signIn}>
-        Sign In
+        Try logging in
       </Button>
     </Card>
   )
