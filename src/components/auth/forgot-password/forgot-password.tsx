@@ -30,7 +30,7 @@ export const ForgotPassword = () => {
   return (
     <Card className={s.forgotPasswordWrapper}>
       <Typography variant={'large'} className={s.typo}>
-        Forgot Password
+        Forgot your password?
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <ControlledTextField
@@ -41,17 +41,17 @@ export const ForgotPassword = () => {
           type={'default'}
           control={control}
         />
-        <div className={s.instructions}>
+        <Typography variant={'Body2'} className={s.instructions}>
           Enter your email address and we will send you further instructions
-        </div>
+        </Typography>
         <Button fullWidth={true} className={s.submit} type="submit">
           Send instructions
         </Button>
       </form>
-      <Typography variant={'Body2'} className={s.typo}>
+      <Typography variant={'Body2'} className={s.didYou}>
         Did you remember your password?
       </Typography>
-      <Button as={'a'} variant={'link'} className={s.signIn}>
+      <Button as={'a'} variant={'link'} className={s.tryLog}>
         Try logging in
       </Button>
     </Card>
