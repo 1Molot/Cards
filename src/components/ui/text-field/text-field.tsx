@@ -1,6 +1,6 @@
 import { ChangeEvent, KeyboardEvent, ComponentPropsWithoutRef, forwardRef, useState } from 'react'
 
-import { DeleteIcon } from '../../../assets/icons/deleteIcon.tsx'
+import { Delete } from '../../../assets/icons/delete.tsx'
 import { Eye } from '../../../assets/icons/eye.tsx'
 import { NotEye } from '../../../assets/icons/not-eye.tsx'
 import { Search } from '../../../assets/icons/search.tsx'
@@ -104,7 +104,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
                 disabled={disableValue}
                 onClick={onSearchClearHandler}
               >
-                <DeleteIcon fill={disableValue ? '#4c4c4c' : '#808080'} />
+                <Delete fill={disableValue ? '#4c4c4c' : '#808080'} />
               </button>
             )}
           </div>

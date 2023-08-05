@@ -17,4 +17,4 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) =
 )
 const ForwardRef = forwardRef(SvgComponent)
 
-export const DeleteIcon = memo(ForwardRef)
+export const Delete = memo(ForwardRef)

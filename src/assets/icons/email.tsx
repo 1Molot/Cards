@@ -63,4 +63,4 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) =
 )
 const ForwardRef = forwardRef(SvgComponent)
 
-export const CheckEmail = memo(ForwardRef)
+export const Email = memo(ForwardRef)
