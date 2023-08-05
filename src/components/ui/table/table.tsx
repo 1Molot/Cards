@@ -3,7 +3,6 @@ import { ComponentProps, FC } from 'react'
 import { clsx } from 'clsx'
 import { BiChevronUp } from 'react-icons/bi'
 
-//import { Sort } from '../../../services/common/types'
 import { Typography } from '../typography'
 
 import s from './table.module.scss'

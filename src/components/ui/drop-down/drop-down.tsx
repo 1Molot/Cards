@@ -2,8 +2,9 @@ import { FC, ReactNode } from 'react'
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 
-import { Ava, Logout } from '../../../assets/icons'
-import { Profile } from '../../../assets/image'
+import { Ava } from '../../../assets/icons/ava'
+import { Logout } from '../../../assets/icons/logout.tsx'
+import { Profile } from '../../../assets/icons/profile.tsx'
 import { Typography } from '../typography'
 
 import s from './drop-down.module.scss'

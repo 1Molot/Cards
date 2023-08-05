@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Logo } from '../../../assets/image/logo.tsx'
+import { Logo } from '../../../assets/icons/logo.tsx'
 import { Button } from '../button'
 import { DropDown } from '../drop-down'
 import { Typography } from '../typography'

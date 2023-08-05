@@ -1,6 +1,9 @@
 import { ChangeEvent, KeyboardEvent, ComponentPropsWithoutRef, forwardRef, useState } from 'react'
 
-import { DeleteIcon, Eye, NotEye, Search } from '../../../assets/icons'
+import { DeleteIcon } from '../../../assets/icons/deleteIcon.tsx'
+import { Eye } from '../../../assets/icons/eye.tsx'
+import { NotEye } from '../../../assets/icons/not-eye.tsx'
+import { Search } from '../../../assets/icons/search.tsx'
 import { LabelDemo } from '../label'
 import { Typography } from '../typography'
 

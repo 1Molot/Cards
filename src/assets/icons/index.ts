@@ -1,7 +1,1 @@
-export * from './deleteIcon.tsx'
-export * from './eye.tsx'
-export * from './not-eye.tsx'
-export * from './search.tsx'
-export * from './select-arrow.tsx'
-export * from './logout.tsx'
-export * from './ava.tsx'
+export * as icons from '../icons'
