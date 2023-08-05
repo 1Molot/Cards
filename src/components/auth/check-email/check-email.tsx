@@ -19,7 +19,7 @@ export const CheckEmail: FC<PropsType> = ({ email }) => {
         Check Email
       </Typography>
       <Email className={s.emailIcon} />
-      <Typography variant={'body2'} className={s.instructions}>
+      <Typography variant={'Body2'} className={s.instructions}>
         We’ve sent an Email with instructions to {email}
       </Typography>
       <Button as={Link} to="/sign-in" fullWidth={true} className={s.back}>
