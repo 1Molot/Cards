@@ -4,40 +4,47 @@ import { Meta } from '@storybook/react'
 
 import { Typography } from '../typography'
 
-import { Column, Table } from './'
+import {
+  Column,
+  Sort,
+  Table,
+  TableBody,
+  TableCell,
+  TableEmpty,
+  TableHead,
+  TableHeadCell,
+  TableHeader,
+  TableRow,
+} from './'
 
 export default {
   title: 'Components/Table',
-  component: Table.Root,
-} as Meta<typeof Table.Root>
+  component: Table,
+} as Meta<typeof Table>
 
-export type Sort = {
-  key: string
-  direction: 'asc' | 'desc'
-} | null
 export const Default = {
   args: {
     children: (
       <>
-        <Table.Head>
-          <Table.Row>
-            <Table.HeadCell>Название</Table.HeadCell>
-            <Table.HeadCell align="center">Описание</Table.HeadCell>
-            <Table.HeadCell>Ссылка</Table.HeadCell>
-            <Table.HeadCell>Тип</Table.HeadCell>
-            <Table.HeadCell>Вид</Table.HeadCell>
-            <Table.HeadCell />
-          </Table.Row>
-        </Table.Head>
-        <Table.Body>
-          <Table.Row>
-            <Table.Cell>Web Basic</Table.Cell>
-            <Table.Cell>
+        <TableHead>
+          <TableRow>
+            <TableHeadCell>Название</TableHeadCell>
+            <TableHeadCell align="center">Описание</TableHeadCell>
+            <TableHeadCell>Ссылка</TableHeadCell>
+            <TableHeadCell>Тип</TableHeadCell>
+            <TableHeadCell>Вид</TableHeadCell>
+            <TableHeadCell />
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>Web Basic</TableCell>
+            <TableCell>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
               incididunt ut sed do eiusmod tempoei usmodr sit amet, consectetur adipiscing elit, sed
               do...
-            </Table.Cell>
-            <Table.Cell>
+            </TableCell>
+            <TableCell>
               <Typography
                 as={'a'}
                 variant={'Link1'}
@@ -47,27 +54,27 @@ export const Default = {
                 Какая-то ссылка кудато на какой-то источник с информациейо ссылка кудато на какой-то
                 источник
               </Typography>
-            </Table.Cell>
-            <Table.Cell>Основной</Table.Cell>
-            <Table.Cell>Читать</Table.Cell>
-            <Table.Cell>🦎</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Web Basic</Table.Cell>
-            <Table.Cell>
+            </TableCell>
+            <TableCell>Основной</TableCell>
+            <TableCell>Читать</TableCell>
+            <TableCell>🦎</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Web Basic</TableCell>
+            <TableCell>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
               incididunt ut sed do eiusmod tempoei usmodr sit amet, consectetur adipiscing elit, sed
               do...
-            </Table.Cell>
-            <Table.Cell>
+            </TableCell>
+            <TableCell>
               Какая-то ссылка кудато на какой-то источник с информациейо ссылка кудато на какой-то
               источник
-            </Table.Cell>
-            <Table.Cell>Основной</Table.Cell>
-            <Table.Cell>Читать</Table.Cell>
-            <Table.Cell>✨</Table.Cell>
-          </Table.Row>
-        </Table.Body>
+            </TableCell>
+            <TableCell>Основной</TableCell>
+            <TableCell>Читать</TableCell>
+            <TableCell>✨</TableCell>
+          </TableRow>
+        </TableBody>
       </>
     ),
   },
@@ -104,125 +111,28 @@ export const WithMapMethod = {
   args: {
     children: (
       <>
-        <Table.Head>
-          <Table.Row>
-            <Table.HeadCell>Название</Table.HeadCell>
-            <Table.HeadCell align="center">Описание</Table.HeadCell>
-            <Table.HeadCell>Ссылка</Table.HeadCell>
-            <Table.HeadCell>Тип</Table.HeadCell>
-            <Table.HeadCell>Вид</Table.HeadCell>
-          </Table.Row>
-        </Table.Head>
-        <Table.Body>
+        <TableHead>
+          <TableRow>
+            <TableHeadCell>Название</TableHeadCell>
+            <TableHeadCell align="center">Описание</TableHeadCell>
+            <TableHeadCell>Ссылка</TableHeadCell>
+            <TableHeadCell>Тип</TableHeadCell>
+            <TableHeadCell>Вид</TableHeadCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
           {data.map(item => (
-            <Table.Row key={item.id}>
-              <Table.Cell>{item.title}</Table.Cell>
-              <Table.Cell>{item.description}</Table.Cell>
-              <Table.Cell>{item.link}</Table.Cell>
-              <Table.Cell>{item.category}</Table.Cell>
-              <Table.Cell>{item.type}</Table.Cell>
-            </Table.Row>
+            <TableRow key={item.id}>
+              <TableCell>{item.title}</TableCell>
+              <TableCell>{item.description}</TableCell>
+              <TableCell>{item.link}</TableCell>
+              <TableCell>{item.category}</TableCell>
+              <TableCell>{item.type}</TableCell>
+            </TableRow>
           ))}
-        </Table.Body>
+        </TableBody>
       </>
     ),
-  },
-}
-export const WithSort = {
-  render: (args: any) => {
-    const [sort, setSort] = useState<Sort>(null)
-    const sortString: string | null = sort ? `${sort?.key}-${sort?.direction}` : null
-
-    console.log(sort, sortString)
-
-    const columns: Column[] = [
-      {
-        key: 'title',
-        title: 'Name',
-        sortable: true,
-      },
-      {
-        key: 'cardsCount',
-        title: 'Cards',
-        sortable: true,
-      },
-      {
-        key: 'updated',
-        title: 'Last Updated',
-      },
-      {
-        key: 'createdBy',
-        title: 'Created by',
-        sortable: true,
-      },
-      {
-        key: 'options',
-        title: '',
-      },
-    ]
-    const data1 = [
-      {
-        title: 'Project A',
-        cardsCount: 10,
-        updated: '2023-07-07',
-        createdBy: 'John Doe',
-      },
-      {
-        title: 'Project B',
-        cardsCount: 5,
-        updated: '2023-07-06',
-        createdBy: 'Jane Smith',
-      },
-      {
-        title: 'Project C',
-        cardsCount: 8,
-        updated: '2023-07-05',
-        createdBy: 'Alice Johnson',
-      },
-      {
-        title: 'Project D',
-        cardsCount: 3,
-        updated: '2023-07-07',
-        createdBy: 'Bob Anderson',
-      },
-      {
-        title: 'Project E',
-        cardsCount: 12,
-        updated: '2023-07-04',
-        createdBy: 'Emma Davis',
-      },
-    ]
-    const sortedData = useMemo(() => {
-      if (!sortString) {
-        return data1
-      }
-      const [key, direction] = sortString.split('-')
-
-      return [...data1].sort((a, b) => {
-        if (direction === 'asc') {
-          return a[key as keyof typeof a] > b[key as keyof typeof b] ? 1 : -1
-        }
-
-        return a[key as keyof typeof a] < b[key as keyof typeof b] ? 1 : -1
-      })
-    }, [sortString])
-
-    return (
-      <Table.Root {...args} style={{ width: '100%' }}>
-        <Table.Header columns={columns} onSort={setSort} sort={sort} />
-        <Table.Body>
-          {sortedData.map(item => (
-            <Table.Row key={item.title}>
-              <Table.Cell>{item.title}</Table.Cell>
-              <Table.Cell>{item.cardsCount}</Table.Cell>
-              <Table.Cell>{item.updated}</Table.Cell>
-              <Table.Cell>{item.createdBy}</Table.Cell>
-              <Table.Cell>icons...</Table.Cell>
-            </Table.Row>
-          ))}
-        </Table.Body>
-      </Table.Root>
-    )
   },
 }
 const data2 = [
@@ -258,62 +168,41 @@ const data2 = [
   },
 ]
 
-export const WithSort2 = {
+const columns: Array<Column> = [
+  {
+    key: 'name',
+    title: 'Name',
+    sortable: true,
+  },
+  {
+    key: 'cardsCount',
+    title: 'Cards',
+    sortable: true,
+  },
+  {
+    key: 'updated',
+    title: 'Last Updated',
+  },
+  {
+    key: 'createdBy',
+    title: 'Created by',
+  },
+]
+
+export const WithSort = {
   render: () => {
     const [sort, setSort] = useState<Sort>(null)
+    const sortedString = useMemo(() => {
+      if (!sort) return null
 
-    console.log(sort)
+      return `${sort.key}-${sort.direction}`
+    }, [sort])
 
-    const handleSort = (key: string) => {
-      if (sort && sort.key === key) {
-        setSort({
-          key,
-          direction: sort.direction === 'asc' ? 'desc' : 'asc',
-        })
-      } else {
-        setSort({
-          key,
-          direction: 'asc',
-        })
-      }
-    }
-    const columns: Array<Column> = [
-      {
-        key: 'name',
-        title: 'Name',
-      },
-      {
-        key: 'cardsCount',
-        title: 'Cards',
-      },
-      {
-        key: 'updated',
-        title: 'Last Updated',
-      },
-      {
-        key: 'createdBy',
-        title: 'Created by',
-      },
-      {
-        key: 'options',
-        title: '',
-      },
-    ]
+    console.log(sortedString)
 
     return (
       <table>
-        <thead>
-          <tr>
-            {columns.map(column => (
-              <th key={column.key} onClick={() => handleSort(column.key)}>
-                {column.title}
-                {sort && sort.key === column.key && (
-                  <span>{sort.direction === 'asc' ? '▲' : '▼'}</span>
-                )}
-              </th>
-            ))}
-          </tr>
-        </thead>
+        <TableHeader columns={columns} sort={sort} onSort={setSort} />
         <tbody>
           {data2.map(item => (
             <tr key={item.title}>
@@ -330,5 +219,5 @@ export const WithSort2 = {
   },
 }
 export const Empty = {
-  render: () => <Table.Empty />,
+  render: () => <TableEmpty />,
 }
