@@ -6,12 +6,12 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
-import { Desk } from './pages/desks.tsx'
+import { Decks } from './pages/desks/desks.tsx'
 
 const publicRoutes: RouteObject[] = [
   {
     path: '/login',
-    element: <Desk />,
+    element: <Decks />,
   },
 ]
 

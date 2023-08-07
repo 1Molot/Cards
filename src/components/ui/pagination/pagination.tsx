@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { clsx } from 'clsx'
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi'
-import Select, { ActionMeta, SingleValue } from 'react-select'
+import Select, { ActionMeta, SingleValue, StylesConfig } from 'react-select'
 
 import s from './pagination.module.scss'
 import { usePagination } from './usePagination'
@@ -163,7 +163,7 @@ const MainPaginationButtons: FC<MainPaginationButtonsProps> = ({
 export type PerPageSelectProps = {
   perPage?: number
   perPageOptions: number[]
-  onPerPageChange?: (newValue: SingleValue<number>, actionMeta: ActionMeta<number>) => void
+  onPerPageChange?: (newValue: any, value: any) => void
 }
 
 export const PerPageSelect: FC<PerPageSelectProps> = ({
@@ -176,11 +176,28 @@ export const PerPageSelect: FC<PerPageSelectProps> = ({
     options: [value],
   }))
 
+  const colourStyles: StylesConfig<any> = {
+    control: styles => ({ ...styles, backgroundColor: 'black', minHeight: 24, width: 50 }),
+    container: styles => ({ ...styles, width: 50, height: 50 }),
+    indicatorsContainer: styles => ({
+      ...styles,
+      position: 'absolute',
+      right: -20,
+      top: 1,
+      padding: 0,
+      color: 'gray',
+    }),
+    valueContainer: styles => ({ ...styles, padding: 0 }),
+    input: styles => ({ ...styles, width: 50 }),
+    menu: styles => ({ ...styles, width: 50 }),
+  }
+
   return (
     <div className={s.selectBox}>
       Показать
       <Select
-        className={s.select}
+        styles={colourStyles}
+        // className={s.select}
         value={perPage}
         options={selectOptions}
         onChange={onPerPageChange}
