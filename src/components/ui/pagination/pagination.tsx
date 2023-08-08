@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 
 import { clsx } from 'clsx'
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi'
@@ -161,46 +161,89 @@ const MainPaginationButtons: FC<MainPaginationButtonsProps> = ({
 }
 
 export type PerPageSelectProps = {
-  perPage?: number
+  //perPage?: number
   perPageOptions: number[]
-  onPerPageChange?: (newValue: any, value: any) => void
+  // onPerPageChange?: (newValue: any, value: ActionMeta<number>) => void
 }
-
 export const PerPageSelect: FC<PerPageSelectProps> = ({
-  perPage,
+  //perPage,
   perPageOptions,
-  onPerPageChange,
+  // onPerPageChange,
 }) => {
-  const selectOptions = perPageOptions.map((value, i) => ({
-    label: i + '',
-    options: [value],
+  const selectOptions = perPageOptions.map(value => ({
+    value: [value],
+    label: value,
   }))
 
   const colourStyles: StylesConfig<any> = {
-    control: styles => ({ ...styles, backgroundColor: 'black', minHeight: 24, width: 50 }),
-    container: styles => ({ ...styles, width: 50, height: 50 }),
+    control: styles => ({
+      ...styles,
+      backgroundColor: '#333',
+      minHeight: 24,
+      width: 50,
+      boxShadow: 'none',
+      paddingLeft: 4,
+      fontSize: 14,
+    }),
+    container: styles => ({ ...styles, width: 50 }),
     indicatorsContainer: styles => ({
       ...styles,
+      '&:hover': {
+        color: 'red',
+      },
       position: 'absolute',
-      right: -20,
-      top: 1,
+      right: -8,
+      top: -2,
       padding: 0,
-      color: 'gray',
+      color: '#fff',
+    }),
+    menuList: styles => ({
+      ...styles,
+      '&:hover': {
+        backgroundColor: '#333',
+      },
+      backgroundColor: '#333',
+      // overflow: 'hidden',
+      textAlign: 'center',
+      color: 'white',
     }),
     valueContainer: styles => ({ ...styles, padding: 0 }),
-    input: styles => ({ ...styles, width: 50 }),
-    menu: styles => ({ ...styles, width: 50 }),
+    singleValue: styles => ({ ...styles, color: 'white' }),
+
+    option: styles => ({
+      ...styles,
+      '&:hover': {
+        backgroundColor: '#382766',
+        color: 'white',
+      },
+      backgroundColor: '#333',
+      color: 'white',
+      fontSize: 14,
+    }),
+    input: styles => ({
+      ...styles,
+      color: 'white',
+    }),
+  }
+
+  const [selectedOption, setSelectedOption] = useState(0)
+
+  const handleChange = (selectedOption: any) => {
+    setSelectedOption(selectedOption)
   }
 
   return (
     <div className={s.selectBox}>
       Показать
       <Select
+        //value={selectedOption}
         styles={colourStyles}
-        // className={s.select}
-        value={perPage}
         options={selectOptions}
-        onChange={onPerPageChange}
+        //onChange={handleChange}
+        placeholder={selectedOption}
+        onChange={handleChange}
+        //options={options}
+        // menuPortalTarget={document.body}
       />
       на странице
     </div>
