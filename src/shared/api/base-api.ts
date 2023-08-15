@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const baseApi = createApi({
   reducerPath: 'baseApi',
-  tagTypes: ['Decks', 'Cards', 'Admin', 'Auth'],
+  tagTypes: ['Decks', 'Me', 'Cards', 'Admin', 'Auth'],
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://api.flashcards.andrii.es/',
     credentials: 'include',

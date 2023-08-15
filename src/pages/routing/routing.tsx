@@ -6,19 +6,17 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
+import { GlobalHistory } from '../../shared/utils/global-navigate.tsx'
 import { Decks } from '../desks-page'
 
 const publicRoutes: RouteObject[] = [
   {
-    path: '/login',
+    path: '/',
     element: <Decks />,
   },
   // {
-  //   path: '/admin',
-  //   element: <Decks />,//component
-  // },{
-  //   path: '/cards-page',
-  //   element: <Decks />,//component
+  //   path: '/login',
+  //   element: <Sign-in />,
   // },
 ]
 
@@ -42,6 +40,7 @@ export const Router = () => {
   //
   // if (isLoading) return <div>...Loading</div>
   // console.log(data)
+  // const auth = useCurrentAuthQuery({})
 
   return <RouterProvider router={routing} />
 }

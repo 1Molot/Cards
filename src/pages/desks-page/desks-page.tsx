@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { useAppDispatch, useAppSelector } from '../../app/providers/store-provider/store.ts'
+import { useLogoutAuthMutation } from '../../featchers'
 import { decksSlice, useCreateDeckMutation, useGetDecksQuery } from '../../featchers/desks'
 import { Button } from '../../shared/lib/button'
 import { TableCell, TableRow } from '../../shared/lib/table'
@@ -19,7 +20,7 @@ export const Decks = () => {
     dispatch(decksSlice.actions.setItemsPerPage(itemsPerPage))
   const setCurrentPage = (currentPage: number) =>
     dispatch(decksSlice.actions.setCurrentPage(currentPage))
-  const setSearch = (search: string) => dispatch(decksSlice.actions.setSearchByName(search))
+  //const setSearch = (search: string) => dispatch(decksSlice.actions.setSearchByName(search))
 
   const { isLoading, data, refetch } = useGetDecksQuery({
     itemsPerPage,
@@ -29,6 +30,7 @@ export const Decks = () => {
   })
 
   const [createDeck, { isLoading: isCreateDeckLoading }] = useCreateDeckMutation()
+  const [logout] = useLogoutAuthMutation()
 
   const handleCreateClicked = () => createDeck({ name: cardName })
 
@@ -45,6 +47,7 @@ export const Decks = () => {
     <div>
       <div>
         <Button onClick={refetch}>refetch</Button>
+        <Button onClick={logout}>logout</Button>
       </div>
       <div>
         <Button onClick={() => setItemsPerPage(10)}>itemsPerPage: 10</Button>
@@ -56,8 +59,8 @@ export const Decks = () => {
         <Button onClick={() => setCurrentPage(2)}>currentPage: 2</Button>
         <Button onClick={() => setCurrentPage(3)}>currentPage: 3</Button>
       </div>
-      {/*  фильтрация по имени(инпут техфильд)*/}
-      <TextField value={searchByName} onChange={e => setSearch(e.currentTarget.value)} />
+      {/*  фильтрация по имени(инпут техфильд) искать по вопросу*/}
+      {/*<TextField value={searchByName} onChange={e => setSearch(e.currentTarget.value)} />*/}
       <TextField
         value={cardName}
         onChange={e => setCardName(e.currentTarget.value)}

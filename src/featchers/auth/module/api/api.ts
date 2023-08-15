@@ -21,7 +21,10 @@ const authApi = baseApi.injectEndpoints({
             method: 'GET',
           }
         },
-        providesTags: ['Auth'],
+        extraOptions: {
+          maxRetries: 0,
+        },
+        providesTags: ['Me'],
       }),
       updateAuth: builder.mutation<AuthResponse, PatchAuthArgs>({
         query: args => {
@@ -41,7 +44,7 @@ const authApi = baseApi.injectEndpoints({
             body: args,
           }
         },
-        invalidatesTags: ['Auth'],
+        invalidatesTags: ['Me'],
       }),
       signUpAuth: builder.mutation<AuthResponse, SignUpAuthArgs>({
         query: args => {
@@ -74,14 +77,34 @@ const authApi = baseApi.injectEndpoints({
         invalidatesTags: ['Auth'],
       }),
       logoutAuth: builder.mutation<{}, {}>({
-        query: args => {
+        query: () => {
           return {
             url: `v1/auth/logout`,
             method: 'POST',
-            body: args,
           }
         },
-        invalidatesTags: ['Auth'],
+        //   invalidatesTags: ['Auth'],
+        // }),
+        async onQueryStarted(_, { dispatch, queryFulfilled }) {
+          const patchResult = dispatch(
+            authApi.util.updateQueryData('me', undefined, () => {
+              return null
+            })
+          )
+
+          try {
+            await queryFulfilled
+          } catch {
+            patchResult.undo()
+
+            /**
+             * Alternatively, on failure you can invalidate the corresponding cache tags
+             * to trigger a re-fetch:
+             * dispatch(api.util.invalidateTags(['Post']))
+             */
+          }
+        },
+        invalidatesTags: ['Me'],
       }),
       refreshTokenAuth: builder.mutation<{}, {}>({
         query: args => {

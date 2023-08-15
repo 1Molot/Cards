@@ -4,6 +4,7 @@ const initialState = {
   itemsPerPage: 10,
   currentPage: 1,
   searchByName: '',
+  //order
 }
 
 export const decksSlice = createSlice({
