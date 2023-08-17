@@ -1,56 +1,55 @@
-.signInWrapper {
+.card {
+  width: 100%;
+  max-width: 413px;
+  padding: 33px 36px 29px;
+}
+
+.form {
   display: flex;
   flex-direction: column;
-  width: 424px;
-  padding: 32px 36px 25px;
+  gap: 24px;
 
-  .typo {
-    text-align: center;
-  }
+  width: 100%;
+  margin-bottom: 12px;
+}
 
-  .title {
-    margin-bottom: 26px;
-    text-align: center;
-  }
+.checkbox {
+  margin-bottom: 6px;
+}
 
-  .email {
-    margin-bottom: 24px;
-  }
+.title {
+  margin-bottom: 27px;
+  text-align: center;
+}
 
-  .password {
-    margin-bottom: 12px;
-  }
+.recoverPasswordLink,
+.recoverPasswordLink:visited {
+  display: flex;
+  justify-content: flex-end;
 
-  &:nth-child(2) {
-    display: none;
-  }
+  width: 100%;
+  margin-bottom: 66px;
 
-  .forgotWrapper {
-    display: flex;
-    justify-content: right;
+  color: inherit;
+  text-align: right;
+  text-decoration: none;
+}
 
-    & a {
-      margin-bottom: 66px;
-      padding: 6px 0;
-      color: white;
-    }
-  }
+.button {
+  margin-bottom: 20px;
+}
 
-  .question {
-    margin-top: 20px;
-    text-align: center;
-  }
+.caption {
+  margin-bottom: 11px;
+  color: var(--color-light-900);
+  text-align: center;
+}
 
-  .signIn {
-    text-align: center;
-    text-decoration: underline;
+.signUpLink {
+  display: flex;
+  justify-content: center;
 
-    & p {
-      color: var(--color-accent-500);
-    }
-  }
-
-  .submit {
-    padding: 6px 0;
-  }
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-accent-500);
 }

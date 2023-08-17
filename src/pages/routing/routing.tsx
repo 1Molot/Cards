@@ -6,28 +6,29 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
-import { GlobalHistory } from '../../shared/utils/global-navigate.tsx'
+import { useMeQuery } from '../../featchers'
 import { Decks } from '../desks-page'
+import { SignInPage } from '../sign-in/sign-in-pages.tsx'
+
+// import { Decks } from '@/pages/decks/decks.tsx'
+// import { SignInPage } from '@/pages/sign-in/sign-in.tsx'
+// import { useMeQuery } from '@/services/auth/auth.ts'
 
 const publicRoutes: RouteObject[] = [
   {
-    path: '/',
-    element: <Decks />,
+    path: '/login',
+    element: <SignInPage />,
   },
-  // {
-  //   path: '/login',
-  //   element: <Sign-in />,
-  // },
 ]
 
 const privateRoutes: RouteObject[] = [
   {
     path: '/',
-    element: <div>hello</div>,
+    element: <Decks />,
   },
 ]
 
-const routing = createBrowserRouter([
+const router = createBrowserRouter([
   {
     element: <PrivateRoutes />,
     children: privateRoutes,
@@ -36,17 +37,15 @@ const routing = createBrowserRouter([
 ])
 
 export const Router = () => {
-  // const { isLoading, data } = useGetDecksQuery()
-  //
-  // if (isLoading) return <div>...Loading</div>
-  // console.log(data)
-  // const auth = useCurrentAuthQuery({})
-
-  return <RouterProvider router={routing} />
+  return <RouterProvider router={router} />
 }
 
 function PrivateRoutes() {
-  const isAuthenticated = true
+  const { data, isLoading } = useMeQuery()
+
+  if (isLoading) return <div>Loading...</div>
+
+  const isAuthenticated = !!data
 
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
 }

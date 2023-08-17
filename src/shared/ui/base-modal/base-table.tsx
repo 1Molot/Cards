@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 
-import { Table, TableBody, TableHead, TableHeadCell, TableRow } from '../../lib/table'
+import { Table, TableBody, TableHead, TableHeadCell, TableRow } from '../../lib'
 
 type BaseTableType = {
   headerItems: { id: number; title: string }[]

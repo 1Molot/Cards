@@ -9,12 +9,12 @@ import {
   ResetPasswordAuthArg,
   SignUpAuthArgs,
   VerifyAuthArgs,
-} from '../type/type.ts'
+} from '../type'
 
 const authApi = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
-      currentAuth: builder.query<AuthResponse, {}>({
+      me: builder.query<AuthResponse, void>({
         query: () => {
           return {
             url: `v1/auth/me`,
@@ -36,7 +36,7 @@ const authApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Auth'],
       }),
-      loginAuth: builder.mutation<LoginResponse, LoginAuthArgs>({
+      login: builder.mutation<LoginResponse, LoginAuthArgs>({
         query: args => {
           return {
             url: `v1/auth/login`,
@@ -76,7 +76,7 @@ const authApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Auth'],
       }),
-      logoutAuth: builder.mutation<{}, {}>({
+      logout: builder.mutation({
         query: () => {
           return {
             url: `v1/auth/logout`,
@@ -87,6 +87,7 @@ const authApi = baseApi.injectEndpoints({
         // }),
         async onQueryStarted(_, { dispatch, queryFulfilled }) {
           const patchResult = dispatch(
+            //@ts-ignore
             authApi.util.updateQueryData('me', undefined, () => {
               return null
             })
@@ -141,13 +142,13 @@ const authApi = baseApi.injectEndpoints({
 })
 
 export const {
-  useCurrentAuthQuery,
+  useMeQuery,
   useUpdateAuthMutation,
-  useLoginAuthMutation,
+  useLoginMutation,
   useSignUpAuthMutation,
   useVerifyAuthMutation,
   useResendVerificationEmailAuthMutation,
-  useLogoutAuthMutation,
+  useLogoutMutation,
   useRefreshTokenAuthMutation,
   useRecoveryPasswordAuthMutation,
   useResetPasswordAuthMutation,

@@ -1,76 +1,94 @@
+import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 import { z } from 'zod'
 
-import { Button, Card } from '../../../../shared'
-import { ControlledCheckbox, ControlledTextField } from '../../../../shared/lib/controlled'
-import { Typography } from '../../../../shared/lib/typography'
+import {
+  Button,
+  Card,
+  ControlledCheckbox,
+  ControlledTextField,
+  Typography,
+} from '../../../../shared'
 
 import s from './sign-in.module.scss'
 
-const sigInSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(3),
-  rememberMe: z.boolean().default(false),
+const schema = z.object({
+  password: z.string().nonempty('Enter password'),
+  email: z.string().email('Invalid email address').nonempty('Enter email'),
+  rememberMe: z.boolean().optional(),
 })
 
-type SignInFormShem = z.infer<typeof sigInSchema>
-export const SignIn = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<SignInFormShem>({
-    resolver: zodResolver(sigInSchema),
+type FormType = z.infer<typeof schema>
+
+type Props = {
+  onSubmit: (data: FormType) => void
+  isSubmitting?: boolean
+}
+
+export const SignIn = (props: Props) => {
+  const { control, handleSubmit } = useForm<FormType>({
+    mode: 'onSubmit',
+    resolver: zodResolver(schema),
+    defaultValues: {
+      email: '',
+      password: '',
+      rememberMe: false,
+    },
   })
-  const onSubmit = (data: SignInFormShem) => {
-    console.log(data)
-  }
+
+  const handleFormSubmitted = handleSubmit(props.onSubmit)
 
   return (
-    <Card className={s.signInWrapper}>
-      <Typography variant={'large'} className={s.typo}>
-        Sign In
-      </Typography>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <ControlledTextField
-          className={s.field}
-          errorMessage={errors.email?.message}
-          label={'Email'}
-          name={'email'}
-          type={'default'}
-          control={control}
-        />
-        <ControlledTextField
-          className={s.field}
-          errorMessage={errors.password?.message}
-          label={'Password'}
-          name={'password'}
-          type={'password'}
-          control={control}
-        />
-        <ControlledCheckbox
-          control={control}
-          name={'rememberMe'}
-          variant={'withText'}
-          checkBoxText={'Remember me'}
-        />
-        <div className={s.forgotWrapper}>
-          <Button as={'a'} variant={'link'}>
-            <Typography variant={'Body2'}>Forgot Password?</Typography>
-          </Button>
-        </div>
-
-        <Button fullWidth={true} className={s.submit} type="submit">
+    <>
+      <DevTool control={control} />
+      <Card className={s.card}>
+        <Typography variant="large" className={s.title}>
           Sign In
-        </Button>
-      </form>
-      <Typography variant={'Body2'} className={s.typo}>
-        Already have an account?
-      </Typography>
-      <Button as={'a'} variant={'link'} className={s.signIn}>
-        Sign Up
-      </Button>
-    </Card>
+        </Typography>
+        <form onSubmit={handleFormSubmitted}>
+          <div className={s.form}>
+            <ControlledTextField
+              placeholder={'Email'}
+              label={'Email'}
+              name={'email'}
+              control={control}
+            />
+            <ControlledTextField
+              placeholder={'Password'}
+              label={'Password'}
+              type={'password'}
+              name={'password'}
+              control={control}
+            />
+          </div>
+          <ControlledCheckbox
+            className={s.checkbox}
+            label={'Remember me'}
+            control={control}
+            name={'rememberMe'}
+            position={'left'}
+          />
+          <Typography
+            variant="Body2"
+            as={Link}
+            to="/recover-password"
+            className={s.recoverPasswordLink}
+          >
+            Forgot Password?
+          </Typography>
+          <Button className={s.button} fullWidth type={'submit'} disabled={props.isSubmitting}>
+            Sign In
+          </Button>
+        </form>
+        <Typography className={s.caption} variant="Body2">
+          {`Don't have an account?`}
+        </Typography>
+        <Typography variant="Link1" as={Link} to="/sign-up" className={s.signUpLink}>
+          Sign Up
+        </Typography>
+      </Card>
+    </>
   )
 }

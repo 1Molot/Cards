@@ -1,7 +1,5 @@
 import { Provider } from 'react-redux'
 
-//import { Router } from './router'
-
 import { Router } from '../pages/routing/routing.tsx'
 
 import { BaseLayout } from './layouts/base-layout.tsx'
@@ -12,8 +10,6 @@ export function App() {
     <Provider store={store}>
       <BaseLayout>
         <Router />
-        {/*<Decks />*/}
-        {/*<SignIn />*/}
       </BaseLayout>
     </Provider>
   )

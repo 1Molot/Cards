@@ -15,11 +15,6 @@ export type CreateDeckArgs = {
   name: string
 }
 
-export interface Author {
-  id: string
-  name: string
-}
-
 export type DeleteDecksResponse = {
   id: string
   userId: string
@@ -54,3 +49,9 @@ export type DecksResponse = PaginatedEntity<Deck> & {
 }
 
 export type SaveDecksLearnResponse = {}
+
+export type DeleteDeckArgs = Pick<Deck, 'id'>
+export interface Author {
+  id: string
+  name: string
+}
