@@ -1,11 +1,11 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 
 import { clsx } from 'clsx'
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi'
 import Select, { ActionMeta, SingleValue, StylesConfig } from 'react-select'
 
 import s from './pagination.module.scss'
-import { usePagination } from './usePagination.ts'
+import { usePagination } from './usePagination'
 
 type PaginationConditionals =
   | {
@@ -14,7 +14,7 @@ type PaginationConditionals =
       onPerPageChange?: never
     }
   | {
-      perPage: number
+      perPage?: number
       perPageOptions: number[]
       onPerPageChange: (newValue: SingleValue<number>, actionMeta: ActionMeta<number>) => void
     }
@@ -67,6 +67,10 @@ export const Pagination: FC<PaginationProps> = ({
 
   const showPerPageSelect = !!perPage && !!perPageOptions && !!onPerPageChange
 
+  const onNext = () => {
+    handleNextPageClicked()
+  }
+
   return (
     <div className={s.wrap}>
       <div className={s.container}>
@@ -78,7 +82,7 @@ export const Pagination: FC<PaginationProps> = ({
           paginationRange={paginationRange}
         />
 
-        <NextButton onClick={handleNextPageClicked} disabled={isLastPage} />
+        <NextButton onClick={onNext} disabled={isLastPage} />
       </div>
 
       {showPerPageSelect && (
@@ -108,9 +112,13 @@ const Dots: FC = () => {
   return <span className={s.dots}>&#8230;</span>
 }
 const PageButton: FC<PageButtonProps> = ({ onClick, disabled, selected, page }) => {
+  const onChangeHandler = () => {
+    onClick()
+  }
+
   return (
     <button
-      onClick={onClick}
+      onClick={onChangeHandler}
       disabled={selected || disabled}
       className={classNames.pageButton(selected)}
     >
@@ -137,7 +145,7 @@ const NextButton: FC<NavigationButtonProps> = ({ onClick, disabled }) => {
 type MainPaginationButtonsProps = {
   paginationRange: (number | string)[]
   currentPage: number
-  onClick: (pageNumber: number) => () => void
+  onClick: (pageNumber: number) => void
 }
 
 const MainPaginationButtons: FC<MainPaginationButtonsProps> = ({
@@ -148,28 +156,31 @@ const MainPaginationButtons: FC<MainPaginationButtonsProps> = ({
   return (
     <>
       {paginationRange.map((page: number | string, index) => {
-        const isSelected = page === currentPage
+        const selected = +page === currentPage
+
+        const onChangeHandler = () => {
+          if (typeof page !== 'string') {
+            onClick(page)
+          }
+        }
 
         if (typeof page !== 'number') {
           return <Dots key={index} />
         }
 
-        return <PageButton key={index} page={page} selected={isSelected} onClick={onClick(page)} />
+        return <PageButton key={index} page={page} selected={selected} onClick={onChangeHandler} />
       })}
     </>
   )
 }
 
 export type PerPageSelectProps = {
-  //perPage?: number
+  perPage?: number
   perPageOptions: number[]
-  // onPerPageChange?: (newValue: any, value: ActionMeta<number>) => void
+  onPerPageChange?: (newValue: any, value: ActionMeta<number>) => void
 }
-export const PerPageSelect: FC<PerPageSelectProps> = ({
-  //perPage,
-  perPageOptions,
-  // onPerPageChange,
-}) => {
+
+export const PerPageSelect: FC<PerPageSelectProps> = ({ perPageOptions, onPerPageChange }) => {
   const selectOptions = perPageOptions.map(value => ({
     value: [value],
     label: value,
@@ -226,11 +237,11 @@ export const PerPageSelect: FC<PerPageSelectProps> = ({
     }),
   }
 
-  const [selectedOption, setSelectedOption] = useState(0)
+  // const [selectedOption, setSelectedOption] = useState(0)
 
-  const handleChange = (selectedOption: any) => {
-    setSelectedOption(selectedOption)
-  }
+  // const handleChange = (selectedOption: any) => {
+  //   setSelectedOption(selectedOption)
+  // }
 
   return (
     <div className={s.selectBox}>
@@ -239,9 +250,9 @@ export const PerPageSelect: FC<PerPageSelectProps> = ({
         //value={selectedOption}
         styles={colourStyles}
         options={selectOptions}
-        //onChange={handleChange}
-        placeholder={selectedOption}
-        onChange={handleChange}
+        onChange={onPerPageChange}
+        placeholder={selectOptions[0].label}
+        // onChange={onPerPageChange}
         //options={options}
         // menuPortalTarget={document.body}
       />

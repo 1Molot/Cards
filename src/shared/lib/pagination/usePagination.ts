@@ -31,7 +31,7 @@ export const usePagination = ({ count, siblings = 1, page, onChange }: UsePagina
     /*
           Case 1:
           If the number of pages is less than the page numbers we want to show in our
-          paginationComponent, we return the range [1.totalPageCount]
+          paginationComponent, we return the range [1..totalPageCount]
         */
     if (totalPageNumbers >= count) {
       return range(1, count)
@@ -98,7 +98,7 @@ export const usePagination = ({ count, siblings = 1, page, onChange }: UsePagina
   }, [page, onChange])
 
   function handleMainPageClicked(pageNumber: number) {
-    return () => onChange(pageNumber)
+    onChange(pageNumber)
   }
 
   return {
