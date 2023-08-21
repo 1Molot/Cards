@@ -1,10 +1,11 @@
+import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { Link, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 
-import { Button, Card } from '../../../../shared'
-import { ControlledTextField } from '../../../../shared/lib/controlled'
-import { Typography } from '../../../../shared/lib/typography'
+import { Button, Card, ControlledTextField, Typography } from '../../../../shared'
+import { useForgotPasswordMutation } from '../../module'
 
 import s from './forgot-password.module.scss'
 
@@ -15,15 +16,18 @@ const forgotPasswordSchema = z.object({
 type ForgotPasswordFormSchema = z.infer<typeof forgotPasswordSchema>
 
 export const ForgotPassword = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ForgotPasswordFormSchema>({
+  const { control, handleSubmit } = useForm<ForgotPasswordFormSchema>({
     resolver: zodResolver(forgotPasswordSchema),
   })
+  const navigate = useNavigate()
+  const [forgotPassword] = useForgotPasswordMutation()
+
   const onSubmit = (data: ForgotPasswordFormSchema) => {
-    console.log(data)
+    forgotPassword({
+      ...data,
+      html: `<h1>Hi, ##name##</h1><p>Click <a href="http://localhost:5173/recover-password/##token##">here</a> to recover your password</p>`,
+    })
+    navigate(`/check-email/${data.email}`)
   }
 
   return (
@@ -32,9 +36,11 @@ export const ForgotPassword = () => {
         Forgot your password?
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <DevTool control={control} />
         <ControlledTextField
           className={s.field}
-          errorMessage={errors.email?.message}
+          placeholder={'enter your email'}
+          //errorMessage={errors.email?.message}
           label={'Email'}
           name={'email'}
           type={'default'}
@@ -50,7 +56,7 @@ export const ForgotPassword = () => {
       <Typography variant={'Body2'} className={s.didYou}>
         Did you remember your password?
       </Typography>
-      <Button as={'a'} variant={'link'} className={s.tryLog}>
+      <Button as={Link} to="/login" variant={'link'} className={s.tryLog}>
         Try logging in
       </Button>
     </Card>
