@@ -8,16 +8,31 @@ import {
 
 import { useMeQuery } from '../../featchers'
 import { Decks } from '../desks-page'
-import { SignInPage } from '../sign-in/sign-in-pages.tsx'
-
-// import { Decks } from '@/pages/decks/decks.tsx'
-// import { SignInPage } from '@/pages/sign-in/sign-in.tsx'
-// import { useMeQuery } from '@/services/auth/auth.ts'
 
 const publicRoutes: RouteObject[] = [
   {
     path: '/login',
-    element: <SignInPage />,
+    element: <Login />,
+  },
+  {
+    path: '/sign-up',
+    element: <SignUp />,
+  },
+  {
+    path: '/forgot-password',
+    element: <ForgotPassword />,
+  },
+  {
+    path: '/recover-password/:token',
+    element: <CreateNewPassword />,
+  },
+  {
+    path: '/check-email/:email',
+    element: <CheckEmail />,
+  },
+  {
+    path: '/confirm-email/:code',
+    element: <ConfirmationEmail />,
   },
 ]
 

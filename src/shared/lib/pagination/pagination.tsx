@@ -260,26 +260,3 @@ export const PerPageSelect: FC<PerPageSelectProps> = ({ perPageOptions, onPerPag
     </div>
   )
 }
-
-// return (
-//   <div className={classNames.selectBox}>
-//     Показать
-//     <Select
-//       className={classNames.select}
-//       value={perPage}
-//       options={selectOptions}
-//       onChange={onPerPageChange}
-//       variant="pagination"
-//     />
-//     на странице
-//   </div>
-// )
-
-// <Pagination
-//     count={100}
-//     page={1}
-//     onChange={handlePageChange}
-//     perPage={10}
-//     perPageOptions={[10, 20, 50]}
-//     onPerPageChange={handlePerPageChange}
-// />
