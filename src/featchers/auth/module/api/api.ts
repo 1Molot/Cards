@@ -1,93 +1,33 @@
 import { baseApi } from '../../../../shared'
-import {
-  AuthResponse,
-  LoginAuthArgs,
-  LoginResponse,
-  PatchAuthArgs,
-  RecoveryPasswordAuthArg,
-  ResendVerificationEmailAuthArgs,
-  ResetPasswordAuthArg,
-  SignUpAuthArgs,
-  VerifyAuthArgs,
-} from '../type'
+import { RequestForgotPassword, ResponseUserType, SignUpArgsType } from '../type'
 
 const authApi = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
-      me: builder.query<AuthResponse, void>({
-        query: () => {
-          return {
-            url: `v1/auth/me`,
-            method: 'GET',
-          }
-        },
-        extraOptions: {
-          maxRetries: 0,
-        },
+      me: builder.query<ResponseUserType | null, void>({
+        query: () => ({
+          url: 'v1/auth/me',
+          method: 'GET',
+        }),
+        extraOptions: { maxRetries: 0 },
         providesTags: ['Me'],
       }),
-      updateAuth: builder.mutation<AuthResponse, PatchAuthArgs>({
-        query: args => {
-          return {
-            url: `v1/auth/me`,
-            method: 'PATCH',
-            params: args,
-          }
-        },
-        invalidatesTags: ['Auth'],
-      }),
-      login: builder.mutation<LoginResponse, LoginAuthArgs>({
-        query: args => {
-          return {
-            url: `v1/auth/login`,
-            method: 'POST',
-            body: args,
-          }
-        },
+      login: builder.mutation<void, { email: string; password: string; rememberMe: boolean }>({
+        query: body => ({
+          url: 'v1/auth/login',
+          method: 'POST',
+          body: body,
+        }),
         invalidatesTags: ['Me'],
       }),
-      signUpAuth: builder.mutation<AuthResponse, SignUpAuthArgs>({
-        query: args => {
-          return {
-            url: `v1/auth/sign-up`,
-            method: 'POST',
-            body: args,
-          }
-        },
-        invalidatesTags: ['Auth'],
-      }),
-      verifyAuth: builder.mutation<{}, VerifyAuthArgs>({
-        query: args => {
-          return {
-            url: `v1/auth/verify-email`,
-            method: 'POST',
-            body: args,
-          }
-        },
-        invalidatesTags: ['Auth'],
-      }),
-      resendVerificationEmailAuth: builder.mutation<{}, ResendVerificationEmailAuthArgs>({
-        query: args => {
-          return {
-            url: `v1/auth/resend-verification-email`,
-            method: 'POST',
-            body: args,
-          }
-        },
-        invalidatesTags: ['Auth'],
-      }),
-      logout: builder.mutation({
-        query: () => {
-          return {
-            url: `v1/auth/logout`,
-            method: 'POST',
-          }
-        },
-        //   invalidatesTags: ['Auth'],
-        // }),
+      logout: builder.mutation<void, void>({
+        query: body => ({
+          url: 'v1/auth/logout',
+          method: 'POST',
+          body: body,
+        }),
         async onQueryStarted(_, { dispatch, queryFulfilled }) {
           const patchResult = dispatch(
-            //@ts-ignore
             authApi.util.updateQueryData('me', undefined, () => {
               return null
             })
@@ -107,35 +47,60 @@ const authApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Me'],
       }),
-      refreshTokenAuth: builder.mutation<{}, {}>({
-        query: args => {
-          return {
-            url: `v1/auth/refresh-token`,
-            method: 'POST',
-            body: args,
-          }
-        },
-        invalidatesTags: ['Auth'],
+      signUp: builder.mutation<ResponseUserType, SignUpArgsType>({
+        query: body => ({
+          url: 'v1/auth/sign-up',
+          method: 'POST',
+          body: body,
+        }),
+        invalidatesTags: ['Me'],
       }),
-      recoveryPasswordAuth: builder.mutation<{}, RecoveryPasswordAuthArg>({
-        query: args => {
-          return {
-            url: `v1/auth/recovery-password`,
-            method: 'POST',
-            body: args,
-          }
-        },
-        invalidatesTags: ['Auth'],
+      forgotPassword: builder.mutation<RequestForgotPassword, { email: string; html: string }>({
+        query: ({ email, html }) => ({
+          url: 'v1/auth/recover-password',
+          method: 'POST',
+          body: {
+            email,
+            html,
+          },
+        }),
+        invalidatesTags: ['Me'],
       }),
-      resetPasswordAuth: builder.mutation<{}, ResetPasswordAuthArg>({
-        query: args => {
-          return {
-            url: `v1/auth/reset-password/${args.token}`,
-            method: 'POST',
-            body: args,
-          }
-        },
-        invalidatesTags: ['Auth'],
+      resetPassword: builder.mutation<
+        RequestForgotPassword,
+        { token: string | undefined; password: string }
+      >({
+        query: ({ token, password }) => ({
+          url: `v1/auth/reset-password/${token}`,
+          method: 'POST',
+          body: { password },
+        }),
+        invalidatesTags: ['Me'],
+      }),
+      updateProfile: builder.mutation<ResponseUserType, FormData>({
+        query: body => ({
+          url: 'v1/auth/me',
+          method: 'PATCH',
+          body: body,
+        }),
+        invalidatesTags: ['Me'],
+      }),
+      verificationEmail: builder.mutation<void, { code: string | undefined }>({
+        query: ({ code }) => ({
+          url: 'v1/auth/verify-email',
+          method: 'POST',
+          body: { code },
+        }),
+        invalidatesTags: ['Me'],
+      }),
+
+      resendVerificationEmail: builder.mutation<void, { userId: string; html: string }>({
+        query: ({ userId, html }) => ({
+          url: 'v1/auth/resend-verification-email',
+          method: 'POST',
+          body: { userId, html },
+        }),
+        invalidatesTags: ['Me'],
       }),
     }
   },
@@ -143,13 +108,12 @@ const authApi = baseApi.injectEndpoints({
 
 export const {
   useMeQuery,
-  useUpdateAuthMutation,
   useLoginMutation,
-  useSignUpAuthMutation,
-  useVerifyAuthMutation,
-  useResendVerificationEmailAuthMutation,
   useLogoutMutation,
-  useRefreshTokenAuthMutation,
-  useRecoveryPasswordAuthMutation,
-  useResetPasswordAuthMutation,
+  useSignUpMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
+  useUpdateProfileMutation,
+  useVerificationEmailMutation,
+  useResendVerificationEmailMutation,
 } = authApi

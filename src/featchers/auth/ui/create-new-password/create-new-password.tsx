@@ -1,30 +1,32 @@
+import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { useNavigate, useParams } from 'react-router-dom'
 import { z } from 'zod'
 
-import { Button, Card } from '../../../../shared'
-import { ControlledTextField } from '../../../../shared/lib/controlled'
-import { Typography } from '../../../../shared/lib/typography'
+import { Button, Card, ControlledTextField, Typography } from '../../../../shared'
+import { useResetPasswordMutation } from '../../module'
 
 import s from './create-new-password.module.scss'
 
 const createNewPasswordSchema = z.object({
-  password: z.string().min(8).max(20),
+  password: z.string().min(3).max(10),
 })
 
 type CreateNewPasswordFormSchema = z.infer<typeof createNewPasswordSchema>
 
 export const CreateNewPassword = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<CreateNewPasswordFormSchema>({
+  const params = useParams<{ token: string }>()
+  const navigate = useNavigate()
+
+  const { control, handleSubmit } = useForm<CreateNewPasswordFormSchema>({
     resolver: zodResolver(createNewPasswordSchema),
   })
 
+  const [setNewPassword] = useResetPasswordMutation()
   const onSubmit = (data: CreateNewPasswordFormSchema) => {
-    console.log(data)
+    setNewPassword({ password: data.password, token: params.token })
+    navigate('/login')
   }
 
   return (
@@ -33,13 +35,15 @@ export const CreateNewPassword = () => {
         Create New Password
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <DevTool control={control} />
         <ControlledTextField
           className={s.field}
-          errorMessage={errors.password?.message}
+          //errorMessage={errors.password?.message}
           label={'Password'}
           name={'password'}
           type={'password'}
           control={control}
+          placeholder={'enter your password'}
         />
         <Typography variant={'Body2'} className={s.instructions}>
           Create new password and we will send you further instructions to email
