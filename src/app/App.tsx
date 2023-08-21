@@ -10,6 +10,7 @@ export function App() {
     <Provider store={store}>
       <BaseLayout>
         <Router />
+        {/*<SignIn onSubmit={() => {}} />*/}
       </BaseLayout>
     </Provider>
   )

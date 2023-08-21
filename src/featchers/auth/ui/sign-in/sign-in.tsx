@@ -1,4 +1,5 @@
-import { DevTool } from '@hookform/devtools'
+import { FC } from 'react'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
@@ -14,53 +15,53 @@ import {
 
 import s from './sign-in.module.scss'
 
-const schema = z.object({
-  password: z.string().nonempty('Enter password'),
+const sigInSchema = z.object({
+  password: z.string().nonempty('Enter password').min(3).max(10),
   email: z.string().email('Invalid email address').nonempty('Enter email'),
-  rememberMe: z.boolean().optional(),
+  rememberMe: z.boolean().optional().default(false),
 })
 
-type FormType = z.infer<typeof schema>
+type SignInFormShem = z.infer<typeof sigInSchema>
 
-type Props = {
-  onSubmit: (data: FormType) => void
-  isSubmitting?: boolean
+type PropsType = {
+  // onSubmit: (data: FormType) => void
+  // isSubmitting?: boolean
+  onSubmit: (data: SignInFormShem) => void
 }
 
-export const SignIn = (props: Props) => {
-  const { control, handleSubmit } = useForm<FormType>({
-    mode: 'onSubmit',
-    resolver: zodResolver(schema),
+export const SignIn: FC<PropsType> = ({ onSubmit }) => {
+  const { control, handleSubmit } = useForm<SignInFormShem>({
     defaultValues: {
       email: '',
       password: '',
       rememberMe: false,
     },
+    resolver: zodResolver(sigInSchema),
   })
-
-  const handleFormSubmitted = handleSubmit(props.onSubmit)
+  const handleSubmitForm = handleSubmit(onSubmit)
 
   return (
     <>
-      <DevTool control={control} />
       <Card className={s.card}>
         <Typography variant="large" className={s.title}>
           Sign In
         </Typography>
-        <form onSubmit={handleFormSubmitted}>
+        <form onSubmit={handleSubmitForm}>
           <div className={s.form}>
             <ControlledTextField
-              placeholder={'Email'}
+              placeholder={'enter your email'}
               label={'Email'}
               name={'email'}
               control={control}
+              type={'default'}
             />
             <ControlledTextField
-              placeholder={'Password'}
+              placeholder={'enter your password'}
               label={'Password'}
               type={'password'}
               name={'password'}
               control={control}
+              autoComplete={'on'}
             />
           </div>
           <ControlledCheckbox
@@ -70,24 +71,25 @@ export const SignIn = (props: Props) => {
             name={'rememberMe'}
             position={'left'}
           />
-          <Typography
-            variant="Body2"
+          <Button
             as={Link}
-            to="/recover-password"
+            to="/forgot-password"
+            variant={'link'}
             className={s.recoverPasswordLink}
           >
-            Forgot Password?
-          </Typography>
-          <Button className={s.button} fullWidth type={'submit'} disabled={props.isSubmitting}>
+            <Typography variant={'Body2'}>Forgot Password?</Typography>
+          </Button>
+
+          <Button fullWidth={true} className={s.button} type="submit">
             Sign In
           </Button>
         </form>
-        <Typography className={s.caption} variant="Body2">
+        <Typography variant={'Body2'} className={s.caption}>
           {`Don't have an account?`}
         </Typography>
-        <Typography variant="Link1" as={Link} to="/sign-up" className={s.signUpLink}>
+        <Button as={Link} to="/sign-up" variant={'link'} className={s.signUpLink}>
           Sign Up
-        </Typography>
+        </Button>
       </Card>
     </>
   )

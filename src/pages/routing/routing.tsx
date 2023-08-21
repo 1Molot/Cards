@@ -6,8 +6,9 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
-import { useMeQuery } from '../../featchers'
+import { CheckEmail, CreateNewPassword, ForgotPassword, SignUp, useMeQuery } from '../../featchers'
 import { Decks } from '../desks-page'
+import { Login } from '../login/login.tsx'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -30,10 +31,10 @@ const publicRoutes: RouteObject[] = [
     path: '/check-email/:email',
     element: <CheckEmail />,
   },
-  {
-    path: '/confirm-email/:code',
-    element: <ConfirmationEmail />,
-  },
+  // {
+  //   path: '/confirm-email/:code',
+  //   element: <ConfirmationEmail />,
+  // },
 ]
 
 const privateRoutes: RouteObject[] = [
