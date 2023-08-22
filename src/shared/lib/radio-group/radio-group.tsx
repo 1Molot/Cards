@@ -1,42 +1,47 @@
-import { ComponentPropsWithoutRef, FC } from 'react'
+import { FC } from 'react'
 
-import { RadioGroup as RadioGroupHeadless } from '@headlessui/react'
+import * as RadioGroup from '@radix-ui/react-radio-group'
+
+import { Typography } from '../typography'
 
 import s from './radio-group.module.scss'
 
-type Option = {
-  label: string
-  value: string | number
+type RadioGroupProps = {
+  classname?: string
+  options?: any[]
+  onChangeOption?: (option: any) => void
+  isDisabled?: boolean
 }
-
-export type RadioGroupProps = {
-  options: Option[]
-  value: string | number
-  onChange: () => void
-  disabled?: boolean
-  /**The name used when using this component inside a form*/
-  name?: string
-} & ComponentPropsWithoutRef<'div'>
-
-export const RadioGroup: FC<RadioGroupProps> = ({ options, disabled, ...rest }) => {
-  const classNames = {
-    option: s.option,
-    icon: s.icon,
-    label: s.label,
-  }
-
+export const RadioGroupDemo: FC<RadioGroupProps> = ({
+  isDisabled = false,
+  options,
+  onChangeOption,
+  classname,
+}) => {
   return (
-    <RadioGroupHeadless disabled={disabled} {...rest}>
-      {options.map(option => (
-        <RadioGroupHeadless.Option
-          key={option.value}
-          value={option.value}
-          className={classNames.option}
-        >
-          <div className={classNames.icon} />
-          <span className={classNames.label}>{option.label}</span>
-        </RadioGroupHeadless.Option>
-      ))}
-    </RadioGroupHeadless>
+    <form>
+      <RadioGroup.Root
+        className={`${s.radioGroupRoot} ${classname}`}
+        onValueChange={onChangeOption}
+      >
+        {options?.map(o => {
+          return (
+            <div className={s.itemGroup} key={o.id}>
+              <RadioGroup.Item
+                className={s.radioGroupItem}
+                disabled={isDisabled}
+                value={o.id}
+                id={o.id}
+              >
+                <RadioGroup.Indicator className={s.radioGroupIndicator} />
+              </RadioGroup.Item>
+              <label className={`${s.label} ${isDisabled ? s.labelDisabled : ''}`} htmlFor={o.id}>
+                <Typography variant={'Body2'}>{o.value}</Typography>
+              </label>
+            </div>
+          )
+        })}
+      </RadioGroup.Root>
+    </form>
   )
 }

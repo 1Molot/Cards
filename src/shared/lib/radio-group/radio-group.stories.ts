@@ -1,25 +1,35 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { RadioGroup } from './radio-group.tsx'
+import { RadioGroupDemo } from './'
 
-const meta: Meta<typeof RadioGroup> = {
-  component: RadioGroup,
+const meta = {
   title: 'Components/RadioGroup',
+  component: RadioGroupDemo,
   tags: ['autodocs'],
-}
+  argTypes: { onChangeOption: { action: 'radio changes' } },
+} satisfies Meta<typeof RadioGroupDemo>
+
+const people = [
+  { id: 1, value: 'Durward Reynolds' },
+  { id: 2, value: 'Kenton Towne' },
+  { id: 3, value: 'Therese Wunsch' },
+  { id: 4, value: 'Benedict Kessler' },
+  { id: 5, value: 'Katelyn Rohan' },
+]
 
 export default meta
-type Story = StoryObj<typeof RadioGroup>
+type Story = StoryObj<typeof meta>
 
-export const RadioGroups: Story = {
+export const ShowRadioGroupActive: Story = {
   args: {
-    options: [
-      { label: 'Option 1', value: 'option1' },
-      { label: 'Option 2', value: 'option2' },
-      { label: 'Option 3', value: 'option3' },
-    ],
-    value: 'option1',
-    disabled: false,
-    onChange: () => {},
+    options: people,
+    isDisabled: false,
+  },
+}
+
+export const ShowRadioGroupNotActive: Story = {
+  args: {
+    isDisabled: true,
+    options: people,
   },
 }
