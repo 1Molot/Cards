@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Header } from './index.ts'
+import { Header } from './header.tsx'
 
 const meta = {
   title: 'Components/Header',
@@ -11,5 +11,15 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const ShowHeaderNotAuth: Story = { args: { isAuth: false } }
-export const ShowHeaderIsAuth: Story = { args: { isAuth: true } }
+const data = {
+  avatar: '',
+  id: 'string',
+  email: 'D',
+  isEmailVerified: true,
+  name: 'D',
+  created: '2023-08-08T12:12:18.493Z',
+  updated: '2023-08-08T12:12:18.493Z',
+}
+
+export const HeaderIsAuth: Story = { args: { data: data } }
+export const HeaderInNotAuth: Story = { args: { data: data } }

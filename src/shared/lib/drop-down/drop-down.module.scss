@@ -1,6 +1,5 @@
 .dropDownBlock {
-  display: flex;
-  justify-content: end;
+  left: -60px;
 
   button {
     all: unset;
@@ -10,16 +9,18 @@
 
 .iconButton {
   cursor: pointer;
+  background-color: transparent;
+  border: none;
 }
 
-.dropDownContent {
+.dropdownMenuContent {
   padding: 0.75rem;
   background-color: var(--color-dark-700);
   border: 1px solid var(--color-dark-300);
   border-radius: 0.25rem;
 }
 
-.dropDownItem {
+.dropdownMenuItem {
   user-select: none;
 
   position: relative;
@@ -36,27 +37,15 @@
   border-radius: 3px;
   outline: none;
 
-  .dropDownItemInfo {
-    display: flex;
-    gap: 0.38rem;
-    align-items: center;
-  }
-
-  .dropDownItemContent {
+  .dropdownMenuItemContent {
     cursor: pointer;
     display: flex;
     gap: 0.38rem;
     align-items: center;
   }
-
-  .info {
-    .email {
-      color: var(--color-dark-100);
-    }
-  }
 }
 
-.dropDownSeparator {
+.dropdownMenuSeparator {
   height: 1px;
   margin: 0.75rem 0;
   background-color: var(--color-dark-300);

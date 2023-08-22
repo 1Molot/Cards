@@ -2,9 +2,7 @@ import { AvaCard } from '../../assets/icons/ava-card.tsx'
 import Camera from '../../assets/icons/camera.tsx'
 import { Edit } from '../../assets/icons/edit.tsx'
 import { Logout } from '../../assets/icons/logout.tsx'
-import { Button } from '../../shared/lib/button'
-import { Card } from '../../shared/lib/card'
-import { Typography } from '../../shared/lib/typography'
+import { Button, Card, Typography } from '../../shared'
 
 import s from './personal-information.module.scss'
 
