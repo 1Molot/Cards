@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import { ResponseUserType } from '../../../../featchers'
+import { AvatarDemo } from '../../avatar'
 import { Typography } from '../../typography'
 
 import s from './profile-block.module.scss'
