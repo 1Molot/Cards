@@ -1,8 +1,9 @@
 import { FC } from 'react'
 
 import { clsx } from 'clsx'
-import { BiChevronLeft, BiChevronRight } from 'react-icons/bi'
-import Select, { ActionMeta, SingleValue, StylesConfig } from 'react-select'
+
+import { ArrowLeft } from '../../../assets/icons/arrowLeft.tsx'
+import { ArrowRight } from '../../../assets/icons/arrowRight.tsx'
 
 import s from './pagination.module.scss'
 import { usePagination } from './usePagination'
@@ -14,19 +15,19 @@ type PaginationConditionals =
       onPerPageChange?: never
     }
   | {
-      perPage?: number
+      perPage: number
       perPageOptions: number[]
-      onPerPageChange: (newValue: SingleValue<number>, actionMeta: ActionMeta<number>) => void
+      onPerPageChange: (itemPerPage: number) => void
     }
 
 export type PaginationProps = {
-  count: number
+  count?: number
   page: number
   onChange: (page: number) => void
   siblings?: number
   perPage?: number
   perPageOptions?: number[]
-  onPerPageChange?: (newValue: SingleValue<number>, actionMeta: ActionMeta<number>) => void
+  onPerPageChange?: (itemPerPage: number) => void
 } & PaginationConditionals
 
 const classNames = {
@@ -42,15 +43,7 @@ const classNames = {
   },
 }
 
-export const Pagination: FC<PaginationProps> = ({
-  onChange,
-  count,
-  page,
-  perPage = null,
-  perPageOptions,
-  onPerPageChange,
-  siblings,
-}) => {
+export const Pagination: FC<PaginationProps> = ({ onChange, count, page = 1, siblings }) => {
   const {
     paginationRange,
     isLastPage,
@@ -65,15 +58,9 @@ export const Pagination: FC<PaginationProps> = ({
     siblings,
   })
 
-  const showPerPageSelect = !!perPage && !!perPageOptions && !!onPerPageChange
-
-  const onNext = () => {
-    handleNextPageClicked()
-  }
-
   return (
-    <div className={s.wrap}>
-      <div className={s.container}>
+    <div className={classNames.root}>
+      <div className={classNames.container}>
         <PrevButton onClick={handlePreviousPageClicked} disabled={isFirstPage} />
 
         <MainPaginationButtons
@@ -82,18 +69,8 @@ export const Pagination: FC<PaginationProps> = ({
           paginationRange={paginationRange}
         />
 
-        <NextButton onClick={onNext} disabled={isLastPage} />
+        <NextButton onClick={handleNextPageClicked} disabled={isLastPage} />
       </div>
-
-      {showPerPageSelect && (
-        <PerPageSelect
-          {...{
-            perPage,
-            perPageOptions,
-            onPerPageChange,
-          }}
-        />
-      )}
     </div>
   )
 }
@@ -109,16 +86,12 @@ type PageButtonProps = NavigationButtonProps & {
 }
 
 const Dots: FC = () => {
-  return <span className={s.dots}>&#8230;</span>
+  return <span className={classNames.dots}>&#8230;</span>
 }
 const PageButton: FC<PageButtonProps> = ({ onClick, disabled, selected, page }) => {
-  const onChangeHandler = () => {
-    onClick()
-  }
-
   return (
     <button
-      onClick={onChangeHandler}
+      onClick={onClick}
       disabled={selected || disabled}
       className={classNames.pageButton(selected)}
     >
@@ -128,16 +101,16 @@ const PageButton: FC<PageButtonProps> = ({ onClick, disabled, selected, page }) 
 }
 const PrevButton: FC<NavigationButtonProps> = ({ onClick, disabled }) => {
   return (
-    <button className={s.item} onClick={onClick} disabled={disabled}>
-      <BiChevronLeft className={s.icon} size={16} />
+    <button className={classNames.item} onClick={onClick} disabled={disabled}>
+      <ArrowLeft className={classNames.icon} />
     </button>
   )
 }
 
 const NextButton: FC<NavigationButtonProps> = ({ onClick, disabled }) => {
   return (
-    <button className={s.item} onClick={onClick} disabled={disabled}>
-      <BiChevronRight className={s.icon} size={16} />
+    <button className={classNames.item} onClick={onClick} disabled={disabled}>
+      <ArrowRight className={classNames.icon} />
     </button>
   )
 }
@@ -145,7 +118,7 @@ const NextButton: FC<NavigationButtonProps> = ({ onClick, disabled }) => {
 type MainPaginationButtonsProps = {
   paginationRange: (number | string)[]
   currentPage: number
-  onClick: (pageNumber: number) => void
+  onClick: (pageNumber: number) => () => void
 }
 
 const MainPaginationButtons: FC<MainPaginationButtonsProps> = ({
@@ -156,107 +129,14 @@ const MainPaginationButtons: FC<MainPaginationButtonsProps> = ({
   return (
     <>
       {paginationRange.map((page: number | string, index) => {
-        const selected = +page === currentPage
-
-        const onChangeHandler = () => {
-          if (typeof page !== 'string') {
-            onClick(page)
-          }
-        }
+        const isSelected = page === currentPage
 
         if (typeof page !== 'number') {
           return <Dots key={index} />
         }
 
-        return <PageButton key={index} page={page} selected={selected} onClick={onChangeHandler} />
+        return <PageButton key={index} page={page} selected={isSelected} onClick={onClick(page)} />
       })}
     </>
-  )
-}
-
-export type PerPageSelectProps = {
-  perPage?: number
-  perPageOptions: number[]
-  onPerPageChange?: (newValue: any, value: ActionMeta<number>) => void
-}
-
-export const PerPageSelect: FC<PerPageSelectProps> = ({ perPageOptions, onPerPageChange }) => {
-  const selectOptions = perPageOptions.map(value => ({
-    value: [value],
-    label: value,
-  }))
-
-  const colourStyles: StylesConfig<any> = {
-    control: styles => ({
-      ...styles,
-      backgroundColor: '#333',
-      minHeight: 24,
-      width: 50,
-      boxShadow: 'none',
-      paddingLeft: 4,
-      fontSize: 14,
-    }),
-    container: styles => ({ ...styles, width: 50 }),
-    indicatorsContainer: styles => ({
-      ...styles,
-      '&:hover': {
-        color: 'red',
-      },
-      position: 'absolute',
-      right: -8,
-      top: -2,
-      padding: 0,
-      color: '#fff',
-    }),
-    menuList: styles => ({
-      ...styles,
-      '&:hover': {
-        backgroundColor: '#333',
-      },
-      backgroundColor: '#333',
-      // overflow: 'hidden',
-      textAlign: 'center',
-      color: 'white',
-    }),
-    valueContainer: styles => ({ ...styles, padding: 0 }),
-    singleValue: styles => ({ ...styles, color: 'white' }),
-
-    option: styles => ({
-      ...styles,
-      '&:hover': {
-        backgroundColor: '#382766',
-        color: 'white',
-      },
-      backgroundColor: '#333',
-      color: 'white',
-      fontSize: 14,
-    }),
-    input: styles => ({
-      ...styles,
-      color: 'white',
-    }),
-  }
-
-  // const [selectedOption, setSelectedOption] = useState(0)
-
-  // const handleChange = (selectedOption: any) => {
-  //   setSelectedOption(selectedOption)
-  // }
-
-  return (
-    <div className={s.selectBox}>
-      Показать
-      <Select
-        //value={selectedOption}
-        styles={colourStyles}
-        options={selectOptions}
-        onChange={onPerPageChange}
-        placeholder={selectOptions[0].label}
-        // onChange={onPerPageChange}
-        //options={options}
-        // menuPortalTarget={document.body}
-      />
-      на странице
-    </div>
   )
 }

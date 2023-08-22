@@ -1,6 +1,5 @@
-.wrap {
+.root {
   display: flex;
-  flex-wrap: wrap;
   gap: 25px;
   align-items: center;
 }
@@ -11,7 +10,7 @@
   list-style-type: none;
 }
 
-@mixin item() {
+@mixin item {
   all: unset;
 
   display: flex;
@@ -20,9 +19,7 @@
 
   width: 24px;
   height: 24px;
-  padding: 8px;
 
-  font-size: 14px;
   color: var(--color-light-100);
 
   border-radius: 4px;
@@ -34,6 +31,8 @@
   cursor: pointer;
 
   &:focus-visible {
+    outline: var(--color-info-900);
+    stroke: var(--color-info-900);
     stroke-width: 2px;
   }
 
@@ -66,13 +65,12 @@
   display: flex;
   gap: 12px;
   align-items: center;
+
+  color: var(--color-text-primary);
   white-space: nowrap;
+}
 
-  .container {
-    align-self: flex-start;
-  }
-
-  span {
-    display: none;
-  }
+.select {
+  flex-shrink: 0;
+  width: 50px;
 }

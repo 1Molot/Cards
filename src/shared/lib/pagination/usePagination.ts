@@ -6,16 +6,16 @@ const range = (start: number, end: number) => {
   let length = end - start + 1
 
   /*
-        Create an array of certain length and set the elements within it from
-      start value to end value.
-    */
+  	Create an array of certain length and set the elements within it from
+    start value to end value.
+  */
   return Array.from({ length }, (_, idx) => idx + start)
 }
 
 const DOTS = '...'
 
-type UsePaginationParamType = {
-  count: number
+type UsePaginationPropsType = {
+  count?: number
   siblings?: number
   page: number
   onChange: (pageNumber: number) => void
@@ -23,31 +23,36 @@ type UsePaginationParamType = {
 
 type PaginationRange = (number | '...')[]
 
-export const usePagination = ({ count, siblings = 1, page, onChange }: UsePaginationParamType) => {
+export const usePagination = ({
+  count = 1,
+  siblings = 1,
+  page = 1,
+  onChange,
+}: UsePaginationPropsType) => {
   const paginationRange = useMemo(() => {
     // Pages count is determined as siblingCount + firstPage + lastPage + page + 2*DOTS
     const totalPageNumbers = siblings + 5
 
     /*
-          Case 1:
-          If the number of pages is less than the page numbers we want to show in our
-          paginationComponent, we return the range [1..totalPageCount]
-        */
+      Case 1:
+      If the number of pages is less than the page numbers we want to show in our
+      paginationComponent, we return the range [1..totalPageCount]
+    */
     if (totalPageNumbers >= count) {
       return range(1, count)
     }
 
     /*
-            Calculate left and right sibling index and make sure they are within range 1 and totalPageCount
-        */
+    	Calculate left and right sibling index and make sure they are within range 1 and totalPageCount
+    */
     const leftSiblingIndex = Math.max(page - siblings, 1)
     const rightSiblingIndex = Math.min(page + siblings, count)
 
     /*
-          We do not show dots when there is only one page number to be inserted
-          between the extremes of siblings and the page limits i.e 1 and totalPageCount.
-          Hence, we are using leftSiblingIndex > 2 and rightSiblingIndex < totalPageCount - 2
-        */
+      We do not show dots when there is only one page number to be inserted
+      between the extremes of siblings and the page limits i.e 1 and totalPageCount.
+      Hence, we are using leftSiblingIndex > 2 and rightSiblingIndex < totalPageCount - 2
+    */
     const shouldShowLeftDots = leftSiblingIndex > 2
     const shouldShowRightDots = rightSiblingIndex < count - 2
 
@@ -55,8 +60,8 @@ export const usePagination = ({ count, siblings = 1, page, onChange }: UsePagina
     const lastPageIndex = count
 
     /*
-            Case 2: No left dots to show, but rights dots to be shown
-        */
+    	Case 2: No left dots to show, but rights dots to be shown
+    */
     if (!shouldShowLeftDots && shouldShowRightDots) {
       let leftItemCount = 3 + 2 * siblings
       let leftRange = range(1, leftItemCount)
@@ -65,8 +70,8 @@ export const usePagination = ({ count, siblings = 1, page, onChange }: UsePagina
     }
 
     /*
-            Case 3: No right dots to show, but left dots to be shown
-        */
+    	Case 3: No right dots to show, but left dots to be shown
+    */
     if (shouldShowLeftDots && !shouldShowRightDots) {
       let rightItemCount = 3 + 2 * siblings
       let rightRange = range(count - rightItemCount + 1, count)
@@ -75,8 +80,8 @@ export const usePagination = ({ count, siblings = 1, page, onChange }: UsePagina
     }
 
     /*
-            Case 4: Both left and right dots to be shown
-        */
+    	Case 4: Both left and right dots to be shown
+    */
     if (shouldShowLeftDots && shouldShowRightDots) {
       let middleRange = range(leftSiblingIndex, rightSiblingIndex)
 
@@ -84,8 +89,7 @@ export const usePagination = ({ count, siblings = 1, page, onChange }: UsePagina
     }
   }, [siblings, page, count]) as PaginationRange
 
-  const lastPage = paginationRange.at(-1)
-
+  const lastPage = paginationRange?.[paginationRange.length - 1] ?? 1
   const isFirstPage = page === 1
   const isLastPage = page === lastPage
 
@@ -98,11 +102,11 @@ export const usePagination = ({ count, siblings = 1, page, onChange }: UsePagina
   }, [page, onChange])
 
   function handleMainPageClicked(pageNumber: number) {
-    onChange(pageNumber)
+    return () => onChange(pageNumber)
   }
 
   return {
-    paginationRange,
+    paginationRange: paginationRange || [],
     isFirstPage,
     isLastPage,
     handleMainPageClicked,
