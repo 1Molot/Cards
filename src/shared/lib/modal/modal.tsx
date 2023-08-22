@@ -10,23 +10,28 @@ import {
 } from '@radix-ui/react-dialog'
 
 import { Close } from '../../../assets/icons/close.tsx'
+import { Button } from '../button'
 import { Typography } from '../typography'
 
 import s from './modal.module.scss'
 
-type ModalType = {
-  open: boolean
+type PropsType = {
+  open?: boolean
   onClose?: () => void
   showCloseButton?: boolean
   title?: string
+  titleButton?: string
+  callBack?: () => void
 } & ComponentProps<'div'>
 
-export const Modal: FC<ModalType> = ({
+export const Modal: FC<PropsType> = ({
   open = false,
   title,
   onClose,
   children,
+  titleButton,
   showCloseButton = true,
+  callBack,
 }) => {
   function handleModalClosed() {
     onClose?.()
@@ -50,6 +55,14 @@ export const Modal: FC<ModalType> = ({
               )}
             </header>
             <div className={s.contentBox}>{children}</div>
+            <div className={s.buttonBottom}>
+              <Button onClick={() => onClose?.()} variant={'secondary'}>
+                Cancel
+              </Button>
+              <Button variant={'primary'} onClick={callBack}>
+                {titleButton}
+              </Button>
+            </div>
           </DialogContent>
         </DialogPortal>
       )}
