@@ -6,27 +6,31 @@ import { Typography } from '../typography'
 
 import s from './tab-switcher.module.scss'
 
-type TabSwitcherType = {
+type PropsType = {
+  className?: string
   options?: any[]
-  onChangeCallback: (value: any) => void
+  onChangeCallback?: (value: string) => void
+  activeTab?: string
 }
-export const TabSwitcher: FC<TabSwitcherType> = ({ options, onChangeCallback }) => {
+export const TabSwitcher: FC<PropsType> = ({ options, onChangeCallback, className, activeTab }) => {
   return (
-    <Tabs.Root className={s.tabsRoot} onValueChange={onChangeCallback}>
-      <Tabs.List className={s.tabsList}>
-        {options?.map((tab, index) => {
-          return (
-            <Tabs.Trigger
-              disabled={tab.isDisabled}
-              className={s.tabsTrigger}
-              value={tab.value}
-              key={index}
-            >
-              <Typography className={'Body1'}>{tab.name}</Typography>
-            </Tabs.Trigger>
-          )
-        })}
-      </Tabs.List>
-    </Tabs.Root>
+    <div key={activeTab}>
+      <Tabs.Root className={s.tabsRoot} onValueChange={onChangeCallback}>
+        <Tabs.List className={s.tabsList}>
+          {options?.map((tab, index) => {
+            return (
+              <Tabs.Trigger
+                data-state={tab.value === activeTab ? 'active' : ''}
+                className={`${s.tabsTrigger} ${className}`}
+                value={tab.value}
+                key={index}
+              >
+                <Typography className={'body1'}>{tab.value}</Typography>
+              </Tabs.Trigger>
+            )
+          })}
+        </Tabs.List>
+      </Tabs.Root>
+    </div>
   )
 }
