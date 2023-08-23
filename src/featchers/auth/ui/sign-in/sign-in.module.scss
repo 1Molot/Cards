@@ -1,56 +1,58 @@
-.card {
-  width: 100%;
-  max-width: 413px;
-  margin: 20px auto;
-  padding: 33px 36px 29px;
-}
-
-.form {
+.signBlock {
   display: flex;
   flex-direction: column;
-  gap: 24px;
 
-  width: 100%;
-  margin-bottom: 12px;
-}
+  width: 26.5rem;
+  margin: 2.25rem auto 0;
+  padding: 2.06rem 2.25rem;
 
-.checkbox {
-  margin-bottom: 6px;
-}
+  .title {
+    margin-bottom: 1.69rem;
+    text-align: center;
+  }
 
-.title {
-  margin-bottom: 27px;
-  text-align: center;
-}
+  .email {
+    margin-bottom: 1.5rem;
+  }
 
-.recoverPasswordLink,
-.recoverPasswordLink:visited {
-  display: flex;
-  justify-content: flex-end;
+  .password {
+    margin-bottom: 0.75rem;
+  }
 
-  width: 100%;
-  margin-bottom: 20px;
+  .forgotWrapper {
+    display: flex;
+    justify-content: right;
+    margin-bottom: 4.12rem;
 
-  color: inherit;
-  text-align: right;
-  text-decoration: none;
-}
+    & a {
+      padding: 0.375rem 0;
+    }
+  }
 
-.button {
-  margin-bottom: 20px;
-}
+  .forgotPassword {
+    padding: 0;
+    color: var(--color-light-100);
 
-.caption {
-  margin-bottom: 11px;
-  color: var(--color-light-900);
-  text-align: center;
-}
+    &:focus,
+    &:active,
+    &:hover {
+      color: var(--color-light-100);
+      outline: none;
+    }
+  }
 
-.signUpLink {
-  display: flex;
-  justify-content: center;
+  .submit {
+    padding: 0.375rem 0;
+  }
 
-  font-size: var(--font-size-m);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-accent-500);
+  .question {
+    margin-top: 1.25rem;
+    margin-bottom: 0.69rem;
+    color: var(--color-light-900);
+    text-align: center;
+  }
+
+  .signUp {
+    text-decoration: underline;
+  }
 }

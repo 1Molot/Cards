@@ -6,15 +6,16 @@ import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { z } from 'zod'
 
-import s from './personal-information.module.scss'
+import { Edit } from '../../../assets/icons/edit.tsx'
+import { Logout } from '../../../assets/icons/logout.tsx'
+import { AvatarDemo, Button, Card, ControlledTextField, Typography } from '../../../shared/lib'
 import {
   useLogoutMutation,
   useResendVerificationEmailMutation,
   useUpdateProfileMutation,
 } from '../../auth'
-import { AvatarDemo, Button, Card, ControlledTextField, Typography } from '../../../shared'
-import { Edit } from '../../../assets/icons/edit.tsx'
-import { Logout } from '../../../assets/icons/logout.tsx'
+
+import s from './personal-information.module.scss'
 
 const sigInSchema = z.object({
   name: z.string().trim().min(3).max(10),

@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import { OkEmail } from '../../assets/icons/ok-email.tsx'
-import { Button, Card, Typography } from '../../shared'
+import { Button, Card, Typography } from '../../shared/lib'
 import { useVerificationEmailMutation } from '../auth'
 
 import s from './confirmation-email.module.scss'

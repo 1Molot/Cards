@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 
-import { Button, Card, ControlledTextField, Typography } from '../../../../shared'
+import { Button, Card, ControlledTextField, Typography } from '../../../../shared/lib'
 import { useForgotPasswordMutation } from '../../module'
 
 import s from './forgot-password.module.scss'

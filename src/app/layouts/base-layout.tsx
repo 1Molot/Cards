@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom'
 
+import 'react-toastify/dist/ReactToastify.css'
 import { useMeQuery } from '../../featchers'
 import { GlobalToast, Header } from '../../shared/lib'
 

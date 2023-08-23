@@ -11,7 +11,7 @@ import {
   ControlledCheckbox,
   ControlledTextField,
   Typography,
-} from '../../../../shared'
+} from '../../../../shared/lib'
 
 import s from './sign-in.module.scss'
 
@@ -41,56 +41,49 @@ export const SignIn: FC<PropsType> = ({ onSubmit }) => {
   const handleSubmitForm = handleSubmit(onSubmit)
 
   return (
-    <>
-      <Card className={s.card}>
-        <Typography variant="large" className={s.title}>
-          Sign In
-        </Typography>
-        <form onSubmit={handleSubmitForm}>
-          <div className={s.form}>
-            <ControlledTextField
-              placeholder={'enter your email'}
-              label={'Email'}
-              name={'email'}
-              control={control}
-              type={'default'}
-            />
-            <ControlledTextField
-              placeholder={'enter your password'}
-              label={'Password'}
-              type={'password'}
-              name={'password'}
-              control={control}
-              autoComplete={'on'}
-            />
-          </div>
-          <ControlledCheckbox
-            className={s.checkbox}
-            label={'Remember me'}
-            control={control}
-            name={'rememberMe'}
-            position={'left'}
-          />
-          <Button
-            as={Link}
-            to="/forgot-password"
-            variant={'link'}
-            className={s.recoverPasswordLink}
-          >
+    <Card className={s.signBlock}>
+      <Typography className={s.title} variant={'large'}>
+        Sign In
+      </Typography>
+      <form onSubmit={handleSubmitForm}>
+        <ControlledTextField
+          name={'email'}
+          label={'Email'}
+          type={'default'}
+          placeholder={'enter your email'}
+          control={control}
+          className={s.email}
+        />
+        <ControlledTextField
+          name={'password'}
+          label={'Password'}
+          type={'password'}
+          placeholder={'enter your password'}
+          control={control}
+          className={s.password}
+          autoComplete={'on'}
+        />
+        <ControlledCheckbox
+          control={control}
+          name={'rememberMe'}
+          variant={'withText'}
+          checkBoxText={'Remember me'}
+        />
+        <div className={s.forgotWrapper}>
+          <Button as={Link} to="/forgot-password" variant={'link'} className={s.forgotPassword}>
             <Typography variant={'Body2'}>Forgot Password?</Typography>
           </Button>
-
-          <Button fullWidth={true} className={s.button} type="submit">
-            Sign In
-          </Button>
-        </form>
-        <Typography variant={'Body2'} className={s.caption}>
-          {`Don't have an account?`}
-        </Typography>
-        <Button as={Link} to="/sign-up" variant={'link'} className={s.signUpLink}>
-          Sign Up
+        </div>
+        <Button fullWidth={true} className={s.submit} type="submit">
+          Sign In
         </Button>
-      </Card>
-    </>
+      </form>
+      <Typography variant={'Body2'} className={s.question}>
+        Don&apos;t have an account?
+      </Typography>
+      <Button as={Link} to="/sign-up" variant={'link'} className={s.signUp}>
+        Sign Up
+      </Button>
+    </Card>
   )
 }
