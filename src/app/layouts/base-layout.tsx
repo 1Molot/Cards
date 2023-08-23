@@ -9,7 +9,7 @@ export const BaseLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <div>
-      <Header isAuth={false} />
+      <Header />
       {/*<GlobalToast />*/}
       <Outlet />
       {children}

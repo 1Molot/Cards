@@ -1,107 +1,69 @@
-import { ComponentProps, ComponentPropsWithoutRef, ElementRef, FC, forwardRef } from 'react'
+import { ComponentProps, FC, useState } from 'react'
 
 import { clsx } from 'clsx'
 
+import { ArrowDown } from '../../../assets/icons/arrowDown.tsx'
+import { ArrowUp } from '../../../assets/icons/arrowUp.tsx'
+import { Edit } from '../../../assets/icons/edit.tsx'
+import { Play } from '../../../assets/icons/play.tsx'
+import { Trash } from '../../../assets/icons/trash.tsx'
 import { Typography } from '../typography'
 
 import s from './table.module.scss'
 
-export const Table = forwardRef<HTMLTableElement, ComponentPropsWithoutRef<'table'>>(
-  ({ className, ...rest }, ref) => {
-    const classNames = {
-      table: clsx(className, s.table),
-    }
+export type RootProps = ComponentProps<'table'>
 
-    return <table className={classNames.table} {...rest} ref={ref} />
+export const Root: FC<RootProps> = ({ className, ...rest }) => {
+  const classNames = {
+    table: clsx(className, s.table),
   }
-)
-export const TableHead = forwardRef<ElementRef<'thead'>, ComponentPropsWithoutRef<'thead'>>(
-  ({ ...rest }, ref) => {
-    return <thead {...rest} ref={ref} />
-  }
-)
-export type Sort = {
-  key: string
-  direction: 'asc' | 'desc'
-} | null
 
-export type Column = {
-  key: string
-  title: string
-  sortable?: boolean
+  return <table className={classNames.table} {...rest} />
 }
-export const TableHeader: FC<
-  Omit<
-    ComponentPropsWithoutRef<'thead'> & {
-      columns: Column[]
-      sort?: Sort
-      onSort?: (sort: Sort) => void
-    },
-    'children'
-  >
-> = ({ columns, sort, onSort, ...restProps }) => {
-  const handleSort = (key: string, sortable?: boolean) => () => {
-    if (!onSort || !sortable) return
 
-    if (sort?.key !== key) return onSort({ key, direction: 'asc' })
+export type HeadProps = ComponentProps<'thead'>
 
-    if (sort.direction === 'desc') return onSort(null)
-
-    return onSort({
-      key,
-      direction: sort?.direction === 'asc' ? 'desc' : 'asc',
-    })
-  }
-
-  return (
-    <thead {...restProps}>
-      <tr>
-        {columns.map(({ title, key, sortable }) => (
-          <th key={key} onClick={handleSort(key, sortable)}>
-            {title}
-            {sort && sort.key === key && <span>{sort.direction === 'asc' ? '▲' : '▼'}</span>}
-          </th>
-        ))}
-      </tr>
-    </thead>
-  )
+export const Head: FC<HeadProps> = props => {
+  return <thead {...props} />
 }
-export const TableBody = forwardRef<ElementRef<'tbody'>, ComponentPropsWithoutRef<'tbody'>>(
-  ({ ...rest }, ref) => {
-    return <tbody {...rest} ref={ref} />
+
+export type BodyProps = ComponentProps<'tbody'>
+
+export const Body: FC<BodyProps> = props => {
+  return <tbody {...props} />
+}
+
+export type RowProps = ComponentProps<'tr'>
+
+export const Row: FC<RowProps> = ({ className, ...rest }) => {
+  const classNames = {
+    row: clsx(className, s.row),
   }
-)
 
-export const TableRow = forwardRef<ElementRef<'tr'>, ComponentPropsWithoutRef<'tr'>>(
-  ({ ...rest }, ref) => {
-    return <tr {...rest} ref={ref} />
+  return <tr className={classNames.row} {...rest} />
+}
+
+export type HeadCellProps = ComponentProps<'th'>
+
+export const HeadCell: FC<HeadCellProps> = ({ className, ...rest }) => {
+  const classNames = {
+    headCell: clsx(className, s.th),
   }
-)
 
-export const TableHeadCell = forwardRef<ElementRef<'th'>, ComponentPropsWithoutRef<'th'>>(
-  ({ className, children, ...rest }, ref) => {
-    const classNames = {
-      headCell: clsx(className, s.headCell),
-    }
+  return <th className={classNames.headCell} {...rest} />
+}
 
-    return (
-      <th className={classNames.headCell} {...rest} ref={ref}>
-        <span>{children}</span>
-      </th>
-    )
+export type CellProps = ComponentProps<'td'>
+
+export const Cell: FC<CellProps> = ({ className, ...rest }) => {
+  const classNames = {
+    cell: clsx(className, s.tableCell),
   }
-)
-export const TableCell = forwardRef<ElementRef<'td'>, ComponentPropsWithoutRef<'td'>>(
-  ({ className, ...rest }, ref) => {
-    const classNames = {
-      cell: clsx(className, s.tableCell),
-    }
 
-    return <td className={classNames.cell} {...rest} ref={ref} />
-  }
-)
+  return <td className={classNames.cell} {...rest} />
+}
 
-export const TableEmpty: FC<ComponentProps<'div'> & { mt?: string; mb?: string }> = ({
+export const Empty: FC<ComponentProps<'div'> & { mt?: string; mb?: string }> = ({
   className,
   mt = '89px',
   mb,
@@ -111,12 +73,78 @@ export const TableEmpty: FC<ComponentProps<'div'> & { mt?: string; mb?: string }
   }
 
   return (
-    <Typography
-      variant={'H2'}
-      className={classNames.empty}
-      style={{ marginTop: mt, marginBottom: mb }}
-    >
+    <Typography className={classNames.empty} style={{ marginTop: mt, marginBottom: mb }}>
       Пока тут еще нет данных! :(
     </Typography>
   )
+}
+
+type TypeTestData = {
+  id: number
+  name: string
+  cardsNumber: number
+  lastDate: string
+  createdBy: string
+}
+
+const testData: TypeTestData[] = [
+  { id: 1, name: 'Pack Name', cardsNumber: 4, lastDate: '24.07.2023', createdBy: 'Ivan Ivanov' },
+  { id: 2, name: 'Pack Name', cardsNumber: 4, lastDate: '25.07.2023', createdBy: 'Ivan Ivanov' },
+  { id: 3, name: 'Pack Name', cardsNumber: 4, lastDate: '26.07.2023', createdBy: 'Ivan Ivanov' },
+  { id: 4, name: 'Pack Name', cardsNumber: 4, lastDate: '27.07.2023', createdBy: 'Ivan Ivanov' },
+  { id: 5, name: 'Pack Name', cardsNumber: 4, lastDate: '28.07.2023', createdBy: 'Ivan Ivanov' },
+  { id: 6, name: 'Pack Name', cardsNumber: 4, lastDate: '29.07.2023', createdBy: 'Ivan Ivanov' },
+  { id: 7, name: 'Pack Name', cardsNumber: 4, lastDate: '30.07.2023', createdBy: 'Ivan Ivanov' },
+]
+
+export const Table = () => {
+  const [sortTable, setSortTable] = useState(false)
+  const changeSort = (status: boolean) => setSortTable(status)
+
+  return (
+    <Root>
+      <Head>
+        <Row>
+          <HeadCell>Name</HeadCell>
+          <HeadCell>Cards</HeadCell>
+          <HeadCell
+            onClick={() => {
+              changeSort(!sortTable)
+            }}
+          >
+            Last Updated {sortTable ? <ArrowDown /> : <ArrowUp />}
+          </HeadCell>
+          <HeadCell>Created by</HeadCell>
+          <HeadCell></HeadCell>
+        </Row>
+      </Head>
+      <Body>
+        {testData.map(el => {
+          return (
+            <Row key={el.id}>
+              <Cell>{el.name}</Cell>
+              <Cell>{el.cardsNumber}</Cell>
+              <Cell>{el.lastDate}</Cell>
+              <Cell>{el.createdBy}</Cell>
+              <Cell>
+                <Play />
+                <Edit />
+                <Trash />
+              </Cell>
+            </Row>
+          )
+        })}
+      </Body>
+    </Root>
+  )
+}
+
+export const TableElement = {
+  Root,
+  Head,
+  Body,
+  Row,
+  HeadCell,
+  Cell,
+  Empty,
 }
