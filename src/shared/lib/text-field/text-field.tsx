@@ -10,7 +10,7 @@ import { Typography } from '../typography'
 import s from './text-field.module.scss'
 
 export type TextFieldProps = {
-  type?: 'default' | 'password' | 'searchType'
+  type: 'default' | 'password' | 'searchType'
   label?: string
   errorMessage?: string
   placeholder?: string
@@ -23,19 +23,22 @@ export type TextFieldProps = {
 } & ComponentPropsWithoutRef<'input'>
 
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
-  ({
-    errorMessage,
-    label,
-    placeholder = 'Some text',
-    type = 'default',
-    disableValue = false,
-    value,
-    onEnter,
-    onSearchClear,
-    onChangeText,
-    className,
-    ...restProps
-  }) => {
+  (
+    {
+      errorMessage,
+      label,
+      placeholder = 'Some text',
+      type = 'default',
+      disableValue = false,
+      value,
+      onEnter,
+      onSearchClear,
+      onChangeText,
+      className,
+      ...restProps
+    },
+    ref
+  ) => {
     const [showPassword, setShowPassword] = useState(false)
 
     const finalType = getType(type, showPassword)
@@ -54,12 +57,12 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       onChangeText?.(e.currentTarget.value)
     }
 
-    const onKeyPressCallback = (e: KeyboardEvent<HTMLInputElement>) => {
+    const onKeyDownCallback = (e: KeyboardEvent<HTMLInputElement>) => {
       onEnter && e.key === 'Enter' && onEnter()
     }
     const onSearchClearHandler = () => {
       if (onSearchClear) {
-        onSearchClear?.()
+        onSearchClear()
       }
     }
 
@@ -78,9 +81,10 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
               type={finalType}
               disabled={disableValue}
               onChange={onChangeHandler}
-              onKeyPress={onKeyPressCallback}
+              onKeyDown={onKeyDownCallback}
               style={inputStyle(type)}
               value={value}
+              ref={ref}
               {...restProps}
             />
             {type === 'password' && (
@@ -97,7 +101,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
                 )}
               </button>
             )}
-            {type === 'searchType' && (
+            {type === 'searchType' && !!value && (
               <button
                 className={s.buttonAction}
                 type={'button'}
@@ -118,7 +122,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
 )
 
 function getType(type: string, showPassword: boolean) {
-  if (type === 'password' && !showPassword) {
+  if (type === 'password' && showPassword) {
     return 'text'
   }
 
