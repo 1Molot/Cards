@@ -1,40 +1,44 @@
-import { baseApi } from '../../../../shared'
-import { CardsResponse, GetCardsArg, PatchCardsArg } from '../type/type.ts'
+import { baseApi } from '../../../../shared/api'
+import { CardsResponse, GetRequestType } from '../type'
 
 const cardsApi = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
-      getCards: builder.query<CardsResponse, GetCardsArg>({
-        query: args => {
-          return {
-            url: `v1/cards/${args.id}`,
-            method: 'GET',
-            params: args,
-          }
-        },
+      getCards: builder.query<CardsResponse, GetRequestType>({
+        query: ({ id, question, ...args }) => ({
+          url: `v1/decks/${id}/cards`,
+          method: 'GET',
+          params: { question, ...args },
+        }),
         providesTags: ['Cards'],
       }),
-      patchCards: builder.mutation<CardsResponse, PatchCardsArg>({
-        query: args => {
-          return {
-            url: `v1/cards/${args.id}`,
-            method: 'PATCH',
-            params: args,
-          }
-        },
+      editCard: builder.mutation<any, { id: string; formData: FormData }>({
+        query: ({ id, formData }) => ({
+          url: `v1/cards/${id}`,
+          method: 'PATCH',
+          body: formData,
+        }),
         invalidatesTags: ['Cards'],
       }),
-      deleteCards: builder.mutation<{}, GetCardsArg>({
-        query: args => {
-          return {
-            url: `v1/cards/${args.id}`,
-            method: 'DELETE',
-          }
-        },
+      deleteCard: builder.mutation<any, { id: string }>({
+        query: ({ id }) => ({
+          url: `v1/cards/${id}`,
+          method: 'DELETE',
+        }),
         invalidatesTags: ['Cards'],
       }),
     }
   },
 })
 
-export const { useGetCardsQuery, usePatchCardsMutation, useDeleteCardsMutation } = cardsApi
+export const { useGetCardsQuery, useDeleteCardMutation, useEditCardMutation } = cardsApi
+
+// type CreateEditArguments = {
+//   id: string
+//   questionImg?: string
+//   answerImg?: string
+//   question?: string
+//   answer?: string
+//   questionVideo?: string
+//   answerVideo?: string
+// }

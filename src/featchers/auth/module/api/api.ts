@@ -1,4 +1,4 @@
-import { baseApi } from '../../../../shared'
+import { baseApi } from '../../../../shared/api'
 import { RequestForgotPassword, ResponseUserType, SignUpArgsType } from '../type'
 
 const authApi = baseApi.injectEndpoints({

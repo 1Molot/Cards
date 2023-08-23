@@ -1,7 +1,7 @@
 import { BaseQueryFn, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import { Mutex } from 'async-mutex'
 
-const baseUrl = 'https://api.flashcards.andrii.es/'
+const baseUrl = 'https://api.flashcards.andrii.es'
 
 // Create a new mutex
 const mutex = new Mutex()
@@ -9,9 +9,6 @@ const mutex = new Mutex()
 const baseQuery = fetchBaseQuery({
   baseUrl,
   credentials: 'include',
-  // prepareHeaders: headers => {
-  //   headers.append('x-short-access-token', 'true')
-  // },
 })
 
 export const customFetchBase: BaseQueryFn<

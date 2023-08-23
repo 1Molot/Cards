@@ -1,9 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-const initialState = {}
+const initialState = {
+  isMyPack: true,
+}
 
 export const cardsSlice = createSlice({
-  initialState,
   name: 'cardsSlice',
-  reducers: {},
+  initialState,
+  reducers: {
+    setIsMyPack: (state, action: PayloadAction<{ isMyPack: boolean }>) => {
+      state.isMyPack = action.payload.isMyPack
+    },
+  },
 })

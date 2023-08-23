@@ -1,14 +1,5 @@
-import { RootState } from '../../../../app/providers/store-provider/store.ts'
-import { baseApi, PaginatedEntity } from '../../../../shared'
-import {
-  CreateDeckArgs,
-  Deck,
-  DeckIdArgs,
-  DecksResponse,
-  DeleteDeckArgs,
-  GetDecksArgs,
-  SaveDecksLearnResponse,
-} from '../type'
+import { baseApi } from '../../../../shared/api'
+import { Deck, DecksResponse, GetDecksArgs, LearnDeckResponse } from '../type'
 
 const decksApi = baseApi.injectEndpoints({
   endpoints: builder => {
@@ -23,151 +14,68 @@ const decksApi = baseApi.injectEndpoints({
         },
         providesTags: ['Decks'],
       }),
-      // createDeck: builder.mutation<Deck, CreateDeckArgs>({
-      //   query: data => {
-      //     return {
-      //       url: 'v1/decks',
-      //       method: 'POST',
-      //       //body: { name },
-      //       body: data,
-      //     }
-      //   },
-      //   invalidatesTags: ['Decks'],
-      // }),
-      createDeck: builder.mutation<Deck, CreateDeckArgs>({
-        query: data => {
-          return {
-            url: 'v1/decks',
-            method: 'POST',
-            body: data,
-          }
-        },
-        async onQueryStarted(_, { dispatch, getState, queryFulfilled }) {
-          const state = getState() as RootState
-
-          const { searchByName, orderBy, currentPage, itemsPerPage } = state.decksSlice
-
-          try {
-            const res = await queryFulfilled
-
-            dispatch(
-              decksApi.util.updateQueryData(
-                'getDecks',
-                { name: searchByName, orderBy, currentPage, itemsPerPage },
-                draft => {
-                  draft.items.pop()
-                  draft.items.unshift(res.data)
-                }
-              )
-            )
-          } catch {
-            // patchResult.undo()
-            /**
-             * Alternatively, on failure you can invalidate the corresponding cache tags
-             * to trigger a re-fetch:
-             * dispatch(api.util.invalidateTags(['Post']))
-             */
-          }
-        },
-        invalidatesTags: ['Decks'],
-      }),
-      getDecksById: builder.query<Deck, DeckIdArgs>({
-        query: args => {
-          return {
-            url: `v1/decks/${args.id}`,
-            method: 'GET',
-          }
-        },
+      getDeck: builder.query<Deck, { id: string | undefined }>({
+        query: ({ id }) => ({
+          url: `v1/decks/${id}`,
+          method: 'GET',
+        }),
         providesTags: ['Decks'],
       }),
-      updateDecks: builder.mutation<Deck, DeckIdArgs>({
-        query: args => {
-          return {
-            url: `v1/decks/${args.id}`,
-            method: 'PATCH',
-          }
-        },
+      createDeck: builder.mutation<any, any>({
+        query: formData => ({
+          url: 'v1/decks',
+          method: 'POST',
+          body: formData,
+        }),
         invalidatesTags: ['Decks'],
       }),
-      // deleteDecks: builder.mutation<DeleteDecksResponse, DeckIdArgs>({
-      //   query: args => {
-      //     return {
-      //       url: `v1/decks/${args.id}`,
-      //       method: 'DELETE',
-      //     }
-      //   },
-      //   invalidatesTags: ['Decks'],
-      // }),
-      deleteDeck: builder.mutation<void, DeleteDeckArgs>({
-        query: ({ id }) => {
-          return {
-            url: `v1/decks/${id}`,
-            method: 'DELETE',
-          }
-        },
-        async onQueryStarted({ id }, { dispatch, getState, queryFulfilled }) {
-          const state = getState() as RootState
-
-          const { searchByName, orderBy, currentPage, itemsPerPage } = state.decksSlice
-
-          const patchResult = dispatch(
-            decksApi.util.updateQueryData(
-              'getDecks',
-              { name: searchByName, orderBy, currentPage, itemsPerPage },
-              draft => {
-                draft.items = draft.items.filter(deck => deck.id !== id)
-              }
-            )
-          )
-
-          try {
-            await queryFulfilled
-          } catch {
-            patchResult.undo()
-            /**
-             * Alternatively, on failure you can invalidate the corresponding cache tags
-             * to trigger a re-fetch:
-             * dispatch(api.util.invalidateTags(['Post']))
-             */
-          }
-        },
+      updateDeck: builder.mutation<any, any>({
+        query: ({ id, formData }) => ({
+          url: `v1/decks/${id}`,
+          method: 'PATCH',
+          body: formData,
+        }),
         invalidatesTags: ['Decks'],
       }),
-      retrieveDecksCards: builder.query<PaginatedEntity<Deck>, DeckIdArgs>({
-        query: args => {
+      createCard: builder.mutation<any, any>({
+        query: ({ id, formData }) => ({
+          url: `v1/decks/${id}/cards`,
+          method: 'POST',
+          body: formData,
+        }),
+        invalidatesTags: ['Cards', 'Decks'],
+      }),
+
+      deletedDeck: builder.mutation<any, any>({
+        query: ({ id }) => ({
+          url: `v1/decks/${id}`,
+          method: 'DELETE',
+        }),
+        invalidatesTags: ['Decks'],
+      }),
+      learnDeck: builder.query<
+        LearnDeckResponse,
+        { id: string | undefined; previousCardId?: string }
+      >({
+        query: ({ id, previousCardId }) => {
           return {
-            url: `v1/decks/${args.id}/cards`,
+            url: `v1/decks/${id}/learn`,
             method: 'GET',
+            params: { previousCardId },
           }
         },
-        providesTags: ['Decks'],
+        providesTags: ['Cards'],
       }),
-      createDecksCards: builder.mutation<Deck, DeckIdArgs>({
-        query: args => {
-          return {
-            url: `v1/decks/${args.id}/cards`,
-            method: 'POST',
-          }
-        },
-        invalidatesTags: ['Decks'],
-      }),
-      retrieveDecksLearn: builder.query<Deck, DeckIdArgs>({
-        query: args => {
-          return {
-            url: `v1/decks/${args.id}/learn`,
-            method: 'GET',
-          }
-        },
-        providesTags: ['Decks'],
-      }),
-      saveDecksLearn: builder.mutation<SaveDecksLearnResponse, DeckIdArgs>({
-        query: args => {
-          return {
-            url: `v1/decks/${args.id}/learn`,
-            method: 'POST',
-          }
-        },
-        invalidatesTags: ['Decks'],
+      updateGradeCard: builder.mutation<
+        LearnDeckResponse,
+        { id: string | undefined; cardId: string | undefined; grade: number }
+      >({
+        query: ({ id, cardId, grade }) => ({
+          url: `v1/decks/${id}/learn`,
+          method: 'POST',
+          body: { cardId, grade },
+        }),
+        invalidatesTags: ['Cards'],
       }),
     }
   },
@@ -175,12 +83,11 @@ const decksApi = baseApi.injectEndpoints({
 
 export const {
   useGetDecksQuery,
+  useGetDeckQuery,
   useCreateDeckMutation,
-  useGetDecksByIdQuery,
-  useUpdateDecksMutation,
-  useDeleteDeckMutation,
-  useLazyRetrieveDecksCardsQuery,
-  useCreateDecksCardsMutation,
-  useRetrieveDecksLearnQuery,
-  useSaveDecksLearnMutation,
+  useDeletedDeckMutation,
+  useUpdateDeckMutation,
+  useCreateCardMutation,
+  useLearnDeckQuery,
+  useUpdateGradeCardMutation,
 } = decksApi

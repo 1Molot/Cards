@@ -1,18 +1,16 @@
-import { ReactNode } from 'react'
-
 import { Outlet } from 'react-router-dom'
 
-import { Header } from '../../shared'
+import { useMeQuery } from '../../featchers'
+import { GlobalToast, Header } from '../../shared/lib'
 
-export const BaseLayout = ({ children }: { children: ReactNode }) => {
-  // const { data } = useMeQuery()
+export const BaseLayout = () => {
+  const { data } = useMeQuery()
 
   return (
     <div>
-      <Header />
-      {/*<GlobalToast />*/}
+      <Header data={data} />
+      <GlobalToast />
       <Outlet />
-      {children}
     </div>
   )
 }

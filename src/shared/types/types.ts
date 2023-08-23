@@ -2,11 +2,13 @@ export type PaginatedEntity<T> = {
   pagination: Pagination
   items: T[]
 }
-export interface Pagination {
+export type Pagination = {
   totalPages: number
   currentPage: number
   itemsPerPage: number
   totalItems: number
 }
-
-export type PaginatedRequest<T> = Partial<Pick<Pagination, 'currentPage' | 'itemsPerPage'>> & T
+export type PaginatedRequest<T> = {
+  currentPage?: Pagination['currentPage']
+  itemsPerPage?: Pagination['itemsPerPage']
+} & T

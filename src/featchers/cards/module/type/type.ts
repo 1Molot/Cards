@@ -1,7 +1,17 @@
-export type GetCardsArg = {
-  id: string
+export type GetRequestType = {
+  id?: string
+  question?: string
+  answer?: string
+  orderBy: string | null
+  currentPage?: number
+  itemsPerPage?: number
 }
+
 export type CardsResponse = {
+  items: RootObjectItems[]
+  pagination: RootObjectPagination
+}
+export type RootObjectItems = {
   id: string
   deckId: string
   userId: string
@@ -12,16 +22,13 @@ export type CardsResponse = {
   questionImg: string
   questionVideo: string
   answerVideo: string
-  rating: number
+  grade: number
   created: string
   updated: string
 }
-export type PatchCardsArg = {
-  id: string
-  questionImg: string
-  answerImg: string
-  question: string
-  answer: string
-  questionVideo: string
-  answerVideo: string
+export type RootObjectPagination = {
+  currentPage: number
+  itemsPerPage: number
+  totalPages: number
+  totalItems: number
 }

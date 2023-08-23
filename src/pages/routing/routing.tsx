@@ -6,7 +6,10 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
+import { BaseLayout } from '../../app/layouts/base-layout.tsx'
 import { CheckEmail, CreateNewPassword, ForgotPassword, SignUp, useMeQuery } from '../../featchers'
+import { ConfirmationEmail } from '../../featchers/confirmation-email/confirmation-email.tsx'
+import { Loader } from '../../shared/lib'
 import { Decks } from '../desks-page'
 import { Login } from '../login/login.tsx'
 
@@ -31,10 +34,10 @@ const publicRoutes: RouteObject[] = [
     path: '/check-email/:email',
     element: <CheckEmail />,
   },
-  // {
-  //   path: '/confirm-email/:code',
-  //   element: <ConfirmationEmail />,
-  // },
+  {
+    path: '/confirm-email/:code',
+    element: <ConfirmationEmail />,
+  },
 ]
 
 const privateRoutes: RouteObject[] = [
@@ -46,10 +49,15 @@ const privateRoutes: RouteObject[] = [
 
 const router = createBrowserRouter([
   {
-    element: <PrivateRoutes />,
-    children: privateRoutes,
+    element: <BaseLayout />,
+    children: [
+      {
+        element: <PrivateRoutes />,
+        children: privateRoutes,
+      },
+      ...publicRoutes,
+    ],
   },
-  ...publicRoutes,
 ])
 
 export const Router = () => {
@@ -59,9 +67,7 @@ export const Router = () => {
 function PrivateRoutes() {
   const { data, isLoading } = useMeQuery()
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <Loader />
 
-  const isAuthenticated = !!data
-
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
+  return data ? <Outlet /> : <Navigate to="/login" />
 }
