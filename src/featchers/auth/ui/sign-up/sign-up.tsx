@@ -2,6 +2,7 @@ import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { z } from 'zod'
 
 import { Button, Card, ControlledTextField, Typography } from '../../../../shared/lib'
@@ -37,9 +38,9 @@ export const SignUp = () => {
       .then(() => {
         navigate(`/check-email/${data.email}`)
       })
-    // .catch(err => {
-    //   toast.error(err.data.message)
-    // })
+      .catch(err => {
+        toast.error(err.data.message)
+      })
   }
 
   return (
