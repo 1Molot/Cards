@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 
-import { Sort } from '../../../lib'
+import { Sort } from '../../lib'
 
 export const usePackDeckState = (
   sliderValues: {

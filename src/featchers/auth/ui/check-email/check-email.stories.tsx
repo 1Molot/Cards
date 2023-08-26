@@ -1,11 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
+import { BrowserRouterDecorator, ReduxStoreProviderDecorator } from '../../../../shared/utils'
+
 import { CheckEmail } from './check-email.tsx'
 
 const meta = {
   title: 'auth/CheckEmail',
   component: CheckEmail,
   tags: ['autodocs'],
+  decorators: [BrowserRouterDecorator, ReduxStoreProviderDecorator],
 } satisfies Meta<typeof CheckEmail>
 
 export default meta

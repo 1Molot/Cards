@@ -11,6 +11,7 @@ import {
   useMeQuery,
   useUpdateDeckMutation,
 } from '../../featchers'
+import { useDebounce, usePackDeckState } from '../../shared/hooks'
 import {
   Button,
   Pagination,
@@ -21,7 +22,6 @@ import {
   TextField,
   Typography,
 } from '../../shared/lib'
-import { useDebounce, usePackDeckState } from '../../shared/utils/hooks'
 
 import s from './desks-page.module.scss'
 
