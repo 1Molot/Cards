@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
-import { cardsSlice, decksSlice } from '../../../featchers'
+import { cardsSlice, deckSlice } from '../../../featchers'
 import { baseApi } from '../../../shared/api/base-api.ts'
 
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
-    [decksSlice.name]: decksSlice.reducer,
+    [deckSlice.name]: deckSlice.reducer,
     [cardsSlice.name]: cardsSlice.reducer,
     // [modalSlice.name]: modalSlice.reducer,
   },
