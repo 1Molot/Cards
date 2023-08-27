@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/providers/store-provider/store.ts'
 import { Trash } from '../../assets/icons/trash.tsx'
 import {
-  cardsSlice,
   deckSlice,
   useCreateDeckMutation,
   useDeletedDeckMutation,
@@ -17,12 +16,12 @@ import {
   Pagination,
   SelectDemo,
   SliderDemo,
-  Table,
   TabSwitcher,
   TextField,
   Typography,
 } from '../../shared/lib'
 
+import { DeskTable } from './descks-table.tsx'
 import s from './desks-page.module.scss'
 
 export const Decks = () => {
@@ -89,6 +88,7 @@ export const Decks = () => {
 
   return (
     <div className={s.packListBlock}>
+      {/*все что связанно с  настройками --- мой -- очистить настройки  */}
       <div className={s.headBlock}>
         <Typography variant={'large'}>Packs list</Typography>
         <Button variant={'primary'}>Add New Pack</Button>
@@ -128,7 +128,11 @@ export const Decks = () => {
           Clear Filter
         </Button>
       </div>
-      <Table />
+
+      {/*все что связанно с  таблицей   */}
+      <DeskTable data={data?.items} />
+
+      {/*все что связанно с пагинацией   */}
       <div className={s.pagination}>
         <Pagination count={data?.pagination.totalPages} page={page} onChange={setPage} />
         <Typography variant={'Body2'}>Показать</Typography>

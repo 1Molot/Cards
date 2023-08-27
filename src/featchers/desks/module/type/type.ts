@@ -5,20 +5,20 @@ export type GetDecksArgs = PaginatedRequest<{
   maxCardsCount?: number
   name?: string
   authorId?: Author['id']
-  orderBy: string | null
+  orderBy?: string | null
 }>
 
 export type DecksResponse = {
   maxCardsCount: number
   pagination: Pagination
-  items: Deck[]
+  items: DeckType[]
 }
 
 export type Author = {
   id: string
   name: string
 }
-export type Deck = {
+export type DeckType = {
   id: string
   userId: string
   name: string
