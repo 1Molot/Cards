@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { createPortal } from 'react-dom'
+
 import { useAppDispatch, useAppSelector } from '../../app/providers/store-provider/store.ts'
 import { Trash } from '../../assets/icons/trash.tsx'
 import {
@@ -19,7 +21,7 @@ import {
   TabSwitcher,
   TextField,
   Typography,
-} from '../../shared/lib'
+} from '../../shared/ui'
 
 import { DeskTable } from './descks-table.tsx'
 import s from './desks-page.module.scss'
@@ -86,12 +88,17 @@ export const Decks = () => {
     setSort({ key: 'updated', direction: 'asc' })
   }
 
+  const [isShowModal, setShowModal] = useState(false)
+
   return (
     <div className={s.packListBlock}>
       {/*все что связанно с  настройками --- мой -- очистить настройки  */}
       <div className={s.headBlock}>
         <Typography variant={'large'}>Packs list</Typography>
-        <Button variant={'primary'}>Add New Pack</Button>
+        <Button variant={'primary'} onClick={() => setShowModal(true)}>
+          Add New Pack
+        </Button>
+        {isShowModal && createPortal(<div>Добавить колоду</div>, document.body)}
       </div>
       <div className={s.settingsBlock}>
         <TextField

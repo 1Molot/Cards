@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { DeskTable } from './'
+import { DeskTable } from './index.ts'
 
 const meta = {
   title: 'Components/Table',

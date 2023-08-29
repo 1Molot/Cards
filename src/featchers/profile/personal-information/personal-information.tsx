@@ -8,7 +8,8 @@ import { z } from 'zod'
 
 import { Edit } from '../../../assets/icons/edit.tsx'
 import { Logout } from '../../../assets/icons/logout.tsx'
-import { AvatarDemo, Button, Card, ControlledTextField, Typography } from '../../../shared/lib'
+import { ControlledTextField } from '../../../shared/lib'
+import { AvatarDemo, Button, Card, Typography } from '../../../shared/ui'
 import {
   useLogoutMutation,
   useResendVerificationEmailMutation,

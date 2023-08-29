@@ -5,7 +5,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { z } from 'zod'
 
-import { Button, Card, ControlledTextField, Typography } from '../../../../shared/lib'
+import { ControlledTextField } from '../../../../shared/lib'
+import { Button, Card, Typography } from '../../../../shared/ui'
 import { useSignUpMutation } from '../../module'
 
 import s from './sign-up.module.scss'

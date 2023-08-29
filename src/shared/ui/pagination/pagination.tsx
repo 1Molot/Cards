@@ -6,7 +6,7 @@ import { ArrowLeft } from '../../../assets/icons/arrowLeft.tsx'
 import { ArrowRight } from '../../../assets/icons/arrowRight.tsx'
 
 import s from './pagination.module.scss'
-import { usePagination } from './usePagination'
+import { usePagination } from './usePagination.ts'
 
 type PaginationConditionals =
   | {

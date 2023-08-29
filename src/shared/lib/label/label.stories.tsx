@@ -1,6 +1,6 @@
 import type { Meta } from '@storybook/react'
 
-import { TextField } from '../text-field'
+import { TextField } from '../../ui/text-field'
 
 import { LabelDemo } from './label.tsx'
 

@@ -5,13 +5,8 @@ import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { z } from 'zod'
 
-import {
-  Button,
-  Card,
-  ControlledCheckbox,
-  ControlledTextField,
-  Typography,
-} from '../../../../shared/lib'
+import { ControlledCheckbox, ControlledTextField } from '../../../../shared/lib'
+import { Button, Card, Typography } from '../../../../shared/ui'
 
 import s from './sign-in.module.scss'
 

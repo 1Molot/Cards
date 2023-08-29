@@ -1,9 +1,9 @@
 import { Link, useParams } from 'react-router-dom'
 
 import { Email } from '../../../../assets/icons/email.tsx'
-import { Button } from '../../../../shared/lib/button'
-import { Card } from '../../../../shared/lib/card'
-import { Typography } from '../../../../shared/lib/typography'
+import { Button } from '../../../../shared/ui/button'
+import { Card } from '../../../../shared/ui/card'
+import { Typography } from '../../../../shared/ui/typography'
 
 import s from './check-email.module.scss'
 

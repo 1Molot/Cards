@@ -2,7 +2,7 @@ import { Edit } from '../../assets/icons/edit.tsx'
 import { Play } from '../../assets/icons/play.tsx'
 import { Trash } from '../../assets/icons/trash.tsx'
 import { DeckType } from '../../featchers'
-import { Body, Cell, Head, HeadCell, Root, Row } from '../../shared/lib/table/table.tsx'
+import { Body, Cell, Head, HeadCell, Root, Row } from '../../shared/ui/table/table.tsx'
 
 type TableProps = {
   data?: DeckType[]

@@ -4,7 +4,7 @@ import { Delete } from '../../../assets/icons/delete.tsx'
 import { Eye } from '../../../assets/icons/eye.tsx'
 import { NotEye } from '../../../assets/icons/not-eye.tsx'
 import { Search } from '../../../assets/icons/search.tsx'
-import { LabelDemo } from '../label'
+import { LabelDemo } from '../../lib/label'
 import { Typography } from '../typography'
 
 import s from './text-field.module.scss'
