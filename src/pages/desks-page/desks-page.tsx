@@ -4,14 +4,7 @@ import { createPortal } from 'react-dom'
 
 import { useAppDispatch, useAppSelector } from '../../app/providers/store-provider/store.ts'
 import { Trash } from '../../assets/icons/trash.tsx'
-import {
-  deckSlice,
-  useCreateDeckMutation,
-  useDeletedDeckMutation,
-  useGetDecksQuery,
-  useMeQuery,
-  useUpdateDeckMutation,
-} from '../../featchers'
+import { deckSlice, useGetDecksQuery, useMeQuery } from '../../featchers'
 import { useDebounce, usePackDeckState } from '../../shared/hooks'
 import {
   Button,
@@ -64,10 +57,9 @@ export const Decks = () => {
     maxCardsCount: valueSlider[1],
     currentPage: page,
   })
-  const [createDeck] = useCreateDeckMutation()
-  const [deleteDeck] = useDeletedDeckMutation()
-  const [editDeck] = useUpdateDeckMutation()
-
+  // const [createDeck] = useCreateDeckMutation()
+  // const [deleteDeck] = useDeletedDeckMutation()
+  // const [editDeck] = useUpdateDeckMutation()
   const setSearchByName = (event: string) => {
     dispatch(deckSlice.actions.setSearchByName(event))
   }
@@ -137,7 +129,14 @@ export const Decks = () => {
       </div>
 
       {/*все что связанно с  таблицей   */}
-      <DeskTable data={data?.items} />
+      <DeskTable
+        data={data}
+        setCardId={setCardId}
+        setSort={setSort}
+        sort={sort}
+        authData={meData}
+        // setIsMyPackHandler={}
+      />
 
       {/*все что связанно с пагинацией   */}
       <div className={s.pagination}>
