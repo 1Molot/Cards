@@ -1,1 +1,1 @@
-/// <reference type.ts="vite/client" />
+/// <reference type.ts.ts="vite/client" />

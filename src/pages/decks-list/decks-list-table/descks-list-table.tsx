@@ -3,7 +3,7 @@ import { FC } from 'react'
 import { useAppDispatch } from '../../../app/providers/store-provider/store.ts'
 import { modalActions } from '../../../featchers'
 import { TableElement } from '../../../shared/ui'
-import { HeaderTable } from '../header-table/header-table.tsx'
+import { HeaderTable } from '../../header-table'
 import { TableListRow } from '../table-list-row'
 import { Column, PropsType } from '../type'
 
@@ -78,9 +78,9 @@ export const DecksListTable: FC<PropsType> = ({
             // eslint-disable-next-line
             el.author.id === authData?.id
               ? el.cardsCount !== 0
-                ? `/my-pack/${el.id}`
-                : `/empty-pack/${el.name}/${el.id}`
-              : `/friends-pack/${el.id}`
+                ? `/my-deck/${el.id}`
+                : `/empty-deck/${el.name}/${el.id}`
+              : `/friends-deck/${el.id}`
 
           return (
             <TableListRow

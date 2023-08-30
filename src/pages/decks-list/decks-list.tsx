@@ -133,7 +133,6 @@ export const DecksList = () => {
         <Button variant={'primary'} onClick={setOpen}>
           Add New Pack
         </Button>
-        {/*{isShowModal && createPortal(<div>Добавить колоду</div>, document.body)}*/}
       </div>
       <div className={s.settingsBlock}>
         <TextField

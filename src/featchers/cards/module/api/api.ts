@@ -33,7 +33,7 @@ const cardsApi = baseApi.injectEndpoints({
 
 export const { useGetCardsQuery, useDeleteCardMutation, useEditCardMutation } = cardsApi
 
-// type.ts CreateEditArguments = {
+// type.ts.ts CreateEditArguments = {
 //   id: string
 //   questionImg?: string
 //   answerImg?: string

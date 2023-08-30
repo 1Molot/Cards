@@ -1,9 +1,9 @@
 import { FC } from 'react'
 
-import { ArrowDown } from '../../../assets/icons/arrowDown.tsx'
-import { ArrowUp } from '../../../assets/icons/arrowUp.tsx'
-import { TableElement } from '../../../shared/ui'
-import { HeaderTableType } from '../type'
+import { ArrowDown } from '../../assets/icons/arrowDown.tsx'
+import { ArrowUp } from '../../assets/icons/arrowUp.tsx'
+import { TableElement } from '../../shared/ui'
+import { HeaderTableType } from '../decks-list/type'
 
 export const HeaderTable: FC<HeaderTableType> = ({ columns, sort, onSort }) => {
   const handleSort = (key: string, sortable?: boolean) => () => {

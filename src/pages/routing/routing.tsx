@@ -7,7 +7,14 @@ import {
 } from 'react-router-dom'
 
 import { BaseLayout } from '../../app/layouts/base-layout.tsx'
-import { CheckEmail, CreateNewPassword, ForgotPassword, SignUp, useMeQuery } from '../../featchers'
+import {
+  CheckEmail,
+  CreateNewPassword,
+  ForgotPassword,
+  Profile,
+  SignUp,
+  useMeQuery,
+} from '../../featchers'
 import { ConfirmationEmail } from '../../featchers/confirmation-email/confirmation-email.tsx'
 import { Loader } from '../../shared/lib'
 import { DecksList } from '../decks-list'
@@ -44,6 +51,26 @@ const privateRoutes: RouteObject[] = [
   {
     path: '/',
     element: <DecksList />,
+  },
+  // {
+  //   path: '/my-pack/:id',
+  //   element: <MyDeck />,
+  // },
+  // {
+  //   path: '/friends-pack/:id',
+  //   element: <FriendsMyDeck />,
+  // },
+  // {
+  //   path: '/empty-pack/:name/:id',
+  //   element: <EmptyMyDeck />,
+  // },
+  // {
+  //   path: '/learn-pack/:id',
+  //   element: <LearnMyDeck />,
+  // },
+  {
+    path: '/profile',
+    element: <Profile />,
   },
 ]
 

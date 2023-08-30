@@ -53,7 +53,7 @@ export const TableListRow: FC<TableRowProps> = ({
       <TableElement.Cell>
         <div className={s.icons}>
           {cardsCount ? (
-            <Link to={`/learn-pack/${id}`}>
+            <Link to={`/learn-deck/${id}`}>
               <Play className={s.icon} />
             </Link>
           ) : (

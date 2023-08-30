@@ -4379,7 +4379,7 @@ packages:
 
   /@types/react-icons@3.0.0(react@18.2.0):
     resolution: {integrity: sha512-Vefs6LkLqF61vfV7AiAqls+vpR94q67gunhMueDznG+msAkrYgRxl7gYjNem/kZ+as2l2mNChmF1jRZzzQQtMg==}
-    deprecated: This is a stub type.ts definition. react-icons provides its own type.ts definitions, so you do not need this installed.
+    deprecated: This is a stub type.ts.ts definition. react-icons provides its own type.ts.ts definitions, so you do not need this installed.
     dependencies:
       react-icons: 4.10.1(react@18.2.0)
     transitivePeerDependencies:
@@ -4403,7 +4403,7 @@ packages:
 
   /@types/react-toastify@4.1.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-u7Ie/7LHBsPVz/iJxi/WlRDS7Gh9csCJACTDXx+pSLuZCm94xpkwzhM3jV1L5ZxP/in0Gp2tFbJ91VrSGr1gyQ==}
-    deprecated: This is a stub types definition. react-toastify provides its own type.ts definitions, so you do not need this installed.
+    deprecated: This is a stub types definition. react-toastify provides its own type.ts.ts definitions, so you do not need this installed.
     dependencies:
       react-toastify: 9.1.3(react-dom@18.2.0)(react@18.2.0)
     transitivePeerDependencies:
