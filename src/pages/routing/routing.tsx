@@ -10,7 +10,7 @@ import { BaseLayout } from '../../app/layouts/base-layout.tsx'
 import { CheckEmail, CreateNewPassword, ForgotPassword, SignUp, useMeQuery } from '../../featchers'
 import { ConfirmationEmail } from '../../featchers/confirmation-email/confirmation-email.tsx'
 import { Loader } from '../../shared/lib'
-import { Decks } from '../desks-page'
+import { DecksList } from '../decks-list'
 import { Login } from '../login/login.tsx'
 
 const publicRoutes: RouteObject[] = [
@@ -43,7 +43,7 @@ const publicRoutes: RouteObject[] = [
 const privateRoutes: RouteObject[] = [
   {
     path: '/',
-    element: <Decks />,
+    element: <DecksList />,
   },
 ]
 

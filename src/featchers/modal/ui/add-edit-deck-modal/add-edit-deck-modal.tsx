@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useCallback } from 'react'
+import { ChangeEvent, FC, useCallback, useEffect } from 'react'
 
 import { useAppDispatch, useAppSelector } from '../../../../app/providers/store-provider/store.ts'
 import { ChangeImgDeck } from '../../../../assets/icons/change-Img-deck.tsx'
@@ -7,13 +7,13 @@ import imgDeck from '../../../../assets/icons/imgDeck.png'
 import { Button, CheckBox, Modal, TextField } from '../../../../shared/ui'
 import { modalActions, selectOpen, selectPackSettings } from '../../module'
 
-import s from './add-edit-pack-modal.module.scss'
+import s from './add-edit-deck-modal.module.scss'
 
 type PropsType = {
   onSubmit: () => void
 }
 
-export const AddEditPackModal: FC<PropsType> = ({ onSubmit }) => {
+export const AddEditDeckModal: FC<PropsType> = ({ onSubmit }) => {
   const dispatch = useAppDispatch()
   const open = useAppSelector(selectOpen)
   const { packName, privatePack, img, editImg } = useAppSelector(selectPackSettings)
@@ -26,6 +26,15 @@ export const AddEditPackModal: FC<PropsType> = ({ onSubmit }) => {
   const openModal = open === 'addPack'
   const title = openModal ? 'Add New Pack' : 'Edit Pack'
   const titleButton = openModal ? 'Add New Pack' : 'Save Changes'
+
+  useEffect(() => {
+    return () => {
+      if (img) {
+        URL.revokeObjectURL(packImg)
+      }
+    }
+  }, [img])
+
   // eslint-disable-next-line no-nested-ternary
   const packImg = img
     ? URL.createObjectURL(img)
@@ -33,28 +42,19 @@ export const AddEditPackModal: FC<PropsType> = ({ onSubmit }) => {
     ? editImg || imgDeck
     : imgDeck
 
-  const setPackName = useCallback(
-    (value: string) => {
-      dispatch(modalActions.setPackName(value))
-    },
-    [dispatch]
-  )
+  const setPackName = (value: string) => {
+    dispatch(modalActions.setPackName(value))
+  }
 
-  const setPrivatePack = useCallback(
-    (value: boolean) => {
-      dispatch(modalActions.setPrivatePack(value))
-    },
-    [dispatch]
-  )
+  const setPrivatePack = (value: boolean) => {
+    dispatch(modalActions.setPrivatePack(value))
+  }
 
-  const handleChangeCover = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files![0]
+  const handleChangeCover = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files![0]
 
-      dispatch(modalActions.setImg(file))
-    },
-    [dispatch]
-  )
+    dispatch(modalActions.setImg(file))
+  }
 
   return (
     <Modal
@@ -68,7 +68,7 @@ export const AddEditPackModal: FC<PropsType> = ({ onSubmit }) => {
       <div>
         <img src={packImg} className={s.packImg} alt="pack img" />
         <label htmlFor="packImg" className={s.labelBlock}>
-          <Button as="a" variant="secondary" className={s.changeButton}>
+          <Button variant="secondary" className={s.changeButton}>
             <ChangeImgDeck /> Change Cover
           </Button>
           <div>

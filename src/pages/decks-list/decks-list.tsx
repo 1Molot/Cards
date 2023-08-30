@@ -1,10 +1,12 @@
 import { useState } from 'react'
 
-import { useAppDispatch, useAppSelector } from '../../../app/providers/store-provider/store.ts'
-import { Trash } from '../../../assets/icons/trash.tsx'
+import { useAppDispatch, useAppSelector } from '../../app/providers/store-provider/store.ts'
+import { Trash } from '../../assets/icons/trash.tsx'
 import {
-  AddEditPackModal,
+  AddEditDeckModal,
+  cardsSlice,
   deckSlice,
+  DeleteDeckCardModal,
   modalActions,
   selectOpen,
   selectPackSettings,
@@ -13,8 +15,8 @@ import {
   useGetDecksQuery,
   useMeQuery,
   useUpdateDeckMutation,
-} from '../../../featchers'
-import { useDebounce, usePackDeckState } from '../../../shared/hooks'
+} from '../../featchers'
+import { useDebounce, usePackDeckState } from '../../shared/hooks'
 import {
   Button,
   Pagination,
@@ -23,12 +25,12 @@ import {
   TabSwitcher,
   TextField,
   Typography,
-} from '../../../shared/ui'
-import { DeskTable } from '../descks-table/descks-table.tsx'
+} from '../../shared/ui'
 
-import s from './desks-page.module.scss'
+import { DecksListTable } from './decks-list-table'
+import s from './decks-list.module.scss'
 
-export const Decks = () => {
+export const DecksList = () => {
   const initialName = useAppSelector(state => state.deckSlice.searchByName)
   const tabSwitcherOptions = useAppSelector(state => state.deckSlice.tabSwitcherOptions)
   const itemsPerPage = useAppSelector(state => state.deckSlice.itemsPerPage)
@@ -77,7 +79,7 @@ export const Decks = () => {
     dispatch(deckSlice.actions.setSearchByName(event))
   }
 
-  const addOrEditPack = () => {
+  const addOrEditDeck = () => {
     const formData = new FormData()
 
     formData.append('name', packName)
@@ -94,7 +96,7 @@ export const Decks = () => {
     dispatch(modalActions.setClearState({}))
   }
 
-  const deletePack = () => {
+  const deleteDeckk = () => {
     deleteDeck({ id: cardId })
     dispatch(modalActions.setCloseModal({}))
     dispatch(modalActions.setClearState({}))
@@ -118,6 +120,9 @@ export const Decks = () => {
 
   const setOpen = () => {
     dispatch(modalActions.setOpenModal('addPack'))
+  }
+  const setIsMyPackHandler = (value: boolean) => {
+    dispatch(cardsSlice.actions.setIsMyPack({ isMyPack: value }))
   }
 
   return (
@@ -167,13 +172,13 @@ export const Decks = () => {
       </div>
 
       {/*все что связанно с  таблицей   */}
-      <DeskTable
+      <DecksListTable
         data={data}
         setCardId={setCardId}
         setSort={setSort}
         sort={sort}
         authData={meData}
-        // setIsMyPackHandler={}
+        setIsMyPackHandler={setIsMyPackHandler}
       />
 
       {/*все что связанно с пагинацией   */}
@@ -188,8 +193,8 @@ export const Decks = () => {
         />
         <Typography variant={'Body2'}>На странице</Typography>
       </div>
-      <AddEditPackModal onSubmit={addOrEditPack} />
-      {/*<DeletePackCardModal onSubmit={deletePack} />*/}
+      <AddEditDeckModal onSubmit={addOrEditDeck} />
+      <DeleteDeckCardModal onSubmit={deleteDeckk} />
     </div>
   )
 }
