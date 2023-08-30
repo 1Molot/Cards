@@ -3,21 +3,16 @@ import { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { useAppDispatch } from '../../app/providers/store-provider/store.ts'
-import { Edit } from '../../assets/icons/edit.tsx'
-import { Play } from '../../assets/icons/play.tsx'
-import { Trash } from '../../assets/icons/trash.tsx'
-import { DecksResponse, modalActions, ResponseUserType } from '../../featchers'
-import { Button, Sort, TableElement } from '../../shared/ui'
+import { useAppDispatch } from '../../../app/providers/store-provider/store.ts'
+import { Edit } from '../../../assets/icons/edit.tsx'
+import { Play } from '../../../assets/icons/play.tsx'
+import { Trash } from '../../../assets/icons/trash.tsx'
+import { modalActions } from '../../../featchers'
+import { Button, TableElement } from '../../../shared/ui'
+import { HeaderTable } from '../header-table/header-table.tsx'
+import { Column, PropsType, TableRowProps } from '../type'
 
-import { HeaderTable } from './header-table.tsx'
-import s from './table-packs-list.module.scss'
-
-export type Column = {
-  key: string
-  title: string
-  sortable?: boolean
-}
+import s from './desks-table.module.scss'
 
 const columns: Array<Column> = [
   {
@@ -45,37 +40,6 @@ const columns: Array<Column> = [
     title: 'Actions',
   },
 ]
-
-type PropsType = {
-  data: DecksResponse | undefined
-  authData?: ResponseUserType | null
-  setIsMyPackHandler?: (isMyPack: boolean) => void
-  setCardId: (cardId: string) => void
-  sort: Sort
-  setSort: (value: Sort) => void
-}
-
-type TableRowProps = {
-  el: DeckItem
-  lastRoute: string
-  isAuthor: boolean
-  onClickNameDeckHandler: (authorId: string) => void
-  onEditHandler: (name: string, cardId: string, isPrivate: boolean, img: string | undefined) => void
-  onDeleteHandler: (name: string, cardId: string) => void
-}
-
-type DeckItem = {
-  id: string
-  name: string
-  cardsCount: number
-  updated: string
-  author: {
-    id: string
-    name: string
-  }
-  isPrivate: boolean
-  cover?: string
-}
 
 const TableRow: FC<TableRowProps> = ({
   el,

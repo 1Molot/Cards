@@ -1,18 +1,11 @@
 import { FC } from 'react'
 
-import { ArrowDown } from '../../assets/icons/arrowDown.tsx'
-import { ArrowUp } from '../../assets/icons/arrowUp.tsx'
-import { Sort, TableElement } from '../../shared/ui'
+import { ArrowDown } from '../../../assets/icons/arrowDown.tsx'
+import { ArrowUp } from '../../../assets/icons/arrowUp.tsx'
+import { TableElement } from '../../../shared/ui'
+import { HeaderTableType } from '../type'
 
-import { Column } from './descks-table.tsx'
-
-type PropsType = {
-  columns: Column[]
-  sort?: Sort
-  onSort?: (sort: Sort | null) => void
-}
-
-export const HeaderTable: FC<PropsType> = ({ columns, sort, onSort }) => {
+export const HeaderTable: FC<HeaderTableType> = ({ columns, sort, onSort }) => {
   const handleSort = (key: string, sortable?: boolean) => () => {
     if (!onSort || !sortable) return
 

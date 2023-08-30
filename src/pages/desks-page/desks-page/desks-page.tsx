@@ -2,10 +2,10 @@ import { useState } from 'react'
 
 import { createPortal } from 'react-dom'
 
-import { useAppDispatch, useAppSelector } from '../../app/providers/store-provider/store.ts'
-import { Trash } from '../../assets/icons/trash.tsx'
-import { deckSlice, useGetDecksQuery, useMeQuery } from '../../featchers'
-import { useDebounce, usePackDeckState } from '../../shared/hooks'
+import { useAppDispatch, useAppSelector } from '../../../app/providers/store-provider/store.ts'
+import { Trash } from '../../../assets/icons/trash.tsx'
+import { deckSlice, useGetDecksQuery, useMeQuery } from '../../../featchers'
+import { useDebounce, usePackDeckState } from '../../../shared/hooks'
 import {
   Button,
   Pagination,
@@ -14,9 +14,9 @@ import {
   TabSwitcher,
   TextField,
   Typography,
-} from '../../shared/ui'
+} from '../../../shared/ui'
+import { DeskTable } from '../descks-table/descks-table.tsx'
 
-import { DeskTable } from './descks-table.tsx'
 import s from './desks-page.module.scss'
 
 export const Decks = () => {
