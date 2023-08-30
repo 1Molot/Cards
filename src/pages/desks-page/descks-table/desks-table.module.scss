@@ -1,0 +1,32 @@
+.icons {
+  display: flex;
+  gap: 0.62rem;
+  justify-content: end;
+
+  .icon {
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+}
+
+.nameOfDeckButton {
+  display: flex;
+  justify-content: flex-start;
+  padding: 0;
+
+  &:focus {
+    outline: none;
+  }
+
+  .nameImg {
+    width: 7.4rem;
+
+    img {
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+}

@@ -1,10 +1,19 @@
 import { useState } from 'react'
 
-import { createPortal } from 'react-dom'
-
 import { useAppDispatch, useAppSelector } from '../../../app/providers/store-provider/store.ts'
 import { Trash } from '../../../assets/icons/trash.tsx'
-import { deckSlice, useGetDecksQuery, useMeQuery } from '../../../featchers'
+import {
+  AddEditPackModal,
+  deckSlice,
+  modalActions,
+  selectOpen,
+  selectPackSettings,
+  useCreateDeckMutation,
+  useDeletedDeckMutation,
+  useGetDecksQuery,
+  useMeQuery,
+  useUpdateDeckMutation,
+} from '../../../featchers'
 import { useDebounce, usePackDeckState } from '../../../shared/hooks'
 import {
   Button,
@@ -26,6 +35,8 @@ export const Decks = () => {
   const sliderValues = useAppSelector(state => state.deckSlice.slider)
   const options = useAppSelector(state => state.deckSlice.paginationOptions)
   const currentPage = useAppSelector(state => state.deckSlice.currentPage)
+  const open = useAppSelector(selectOpen)
+  const { privatePack, packName, img } = useAppSelector(selectPackSettings)
 
   const dispatch = useAppDispatch()
 
@@ -46,6 +57,7 @@ export const Decks = () => {
     perPage,
     onSetPerPageHandler,
   } = usePackDeckState(sliderValues, currentPage, itemsPerPage)
+
   const [activeTab, setActiveTab] = useState(tabSwitcherOptions[1].value)
   const { data: meData } = useMeQuery()
   const { data } = useGetDecksQuery({
@@ -57,11 +69,35 @@ export const Decks = () => {
     maxCardsCount: valueSlider[1],
     currentPage: page,
   })
-  // const [createDeck] = useCreateDeckMutation()
-  // const [deleteDeck] = useDeletedDeckMutation()
-  // const [editDeck] = useUpdateDeckMutation()
+
+  const [createDeck] = useCreateDeckMutation()
+  const [deleteDeck] = useDeletedDeckMutation()
+  const [editDeck] = useUpdateDeckMutation()
   const setSearchByName = (event: string) => {
     dispatch(deckSlice.actions.setSearchByName(event))
+  }
+
+  const addOrEditPack = () => {
+    const formData = new FormData()
+
+    formData.append('name', packName)
+    formData.append('isPrivate', String(privatePack))
+    img && formData.append('cover', img)
+
+    if (open === 'addPack') {
+      createDeck(formData)
+    } else if (open === 'editPack') {
+      editDeck({ id: cardId, formData })
+    }
+
+    dispatch(modalActions.setCloseModal({}))
+    dispatch(modalActions.setClearState({}))
+  }
+
+  const deletePack = () => {
+    deleteDeck({ id: cardId })
+    dispatch(modalActions.setCloseModal({}))
+    dispatch(modalActions.setClearState({}))
   }
   const handleTabSort = (value: string) => {
     setActiveTab(value)
@@ -80,17 +116,19 @@ export const Decks = () => {
     setSort({ key: 'updated', direction: 'asc' })
   }
 
-  const [isShowModal, setShowModal] = useState(false)
+  const setOpen = () => {
+    dispatch(modalActions.setOpenModal('addPack'))
+  }
 
   return (
     <div className={s.packListBlock}>
       {/*все что связанно с  настройками --- мой -- очистить настройки  */}
       <div className={s.headBlock}>
         <Typography variant={'large'}>Packs list</Typography>
-        <Button variant={'primary'} onClick={() => setShowModal(true)}>
+        <Button variant={'primary'} onClick={setOpen}>
           Add New Pack
         </Button>
-        {isShowModal && createPortal(<div>Добавить колоду</div>, document.body)}
+        {/*{isShowModal && createPortal(<div>Добавить колоду</div>, document.body)}*/}
       </div>
       <div className={s.settingsBlock}>
         <TextField
@@ -150,7 +188,7 @@ export const Decks = () => {
         />
         <Typography variant={'Body2'}>На странице</Typography>
       </div>
-      {/*<AddEditPackModal onSubmit={addOrEditPack} />*/}
+      <AddEditPackModal onSubmit={addOrEditPack} />
       {/*<DeletePackCardModal onSubmit={deletePack} />*/}
     </div>
   )
