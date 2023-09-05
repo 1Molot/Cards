@@ -7,17 +7,12 @@ import {
 } from 'react-router-dom'
 
 import { BaseLayout } from '../../app/layouts/base-layout.tsx'
-import {
-  CheckEmail,
-  CreateNewPassword,
-  ForgotPassword,
-  Profile,
-  SignUp,
-  useMeQuery,
-} from '../../featchers'
+import { CheckEmail, CreateNewPassword, ForgotPassword, SignUp, useMeQuery } from '../../featchers'
 import { ConfirmationEmail } from '../../featchers/confirmation-email/confirmation-email.tsx'
 import { Loader } from '../../shared/lib'
 import { DecksList } from '../decks-list'
+import { EmptyDeck } from '../empty-deck'
+import { Profile } from '../index.ts'
 import { Login } from '../login/login.tsx'
 import { MyDeck } from '../my-deck/my-deck.tsx'
 
@@ -61,10 +56,10 @@ const privateRoutes: RouteObject[] = [
   //   path: '/friends-deck/:id',
   //   element: <FriendsMyDeck />,
   // },
-  // {
-  //   path: '/empty-deck/:name/:id',
-  //   element: <EmptyMyDeck />,
-  // },
+  {
+    path: '/empty-deck/:name/:id',
+    element: <EmptyDeck />,
+  },
   // {
   //   path: '/learn-deck/:id',
   //   element: <LearnMyDeck />,

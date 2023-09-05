@@ -8,13 +8,13 @@ import { z } from 'zod'
 
 import { Edit } from '../../../assets/icons/edit.tsx'
 import { Logout } from '../../../assets/icons/logout.tsx'
-import { ControlledTextField } from '../../../shared/lib'
-import { AvatarDemo, Button, Card, Typography } from '../../../shared/ui'
 import {
   useLogoutMutation,
   useResendVerificationEmailMutation,
   useUpdateProfileMutation,
-} from '../../auth'
+} from '../../../featchers/auth'
+import { ControlledTextField } from '../../../shared/lib'
+import { AvatarDemo, Button, Card, Typography } from '../../../shared/ui'
 
 import s from './personal-information.module.scss'
 

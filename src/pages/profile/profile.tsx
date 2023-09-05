@@ -1,4 +1,4 @@
-import { useMeQuery, useUpdateProfileMutation } from '../auth'
+import { useMeQuery, useUpdateProfileMutation } from '../../featchers/auth'
 
 import { PersonalInformation } from './personal-information'
 

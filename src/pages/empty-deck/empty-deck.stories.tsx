@@ -2,16 +2,16 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { BrowserRouterDecorator, ReduxStoreProviderDecorator } from '../../shared/utils'
 
-import { MyDeck } from './my-deck.tsx'
+import { EmptyDeck } from './empty-deck.tsx'
 
 const meta = {
-  title: 'Page/MyDeck',
-  component: MyDeck,
+  title: 'Page/EmptyDeck',
+  component: EmptyDeck,
   tags: ['autodocs'],
-  decorators: [BrowserRouterDecorator, ReduxStoreProviderDecorator],
-} satisfies Meta<typeof MyDeck>
+  decorators: [ReduxStoreProviderDecorator, BrowserRouterDecorator],
+} satisfies Meta<typeof EmptyDeck>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const MyDeckStory: Story = {}
+export const EmptyDeckStory: Story = {}
