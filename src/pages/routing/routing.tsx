@@ -19,6 +19,7 @@ import { ConfirmationEmail } from '../../featchers/confirmation-email/confirmati
 import { Loader } from '../../shared/lib'
 import { DecksList } from '../decks-list'
 import { Login } from '../login/login.tsx'
+import { MyDeck } from '../my-deck/my-deck.tsx'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -52,20 +53,20 @@ const privateRoutes: RouteObject[] = [
     path: '/',
     element: <DecksList />,
   },
+  {
+    path: '/my-deck/:id',
+    element: <MyDeck />,
+  },
   // {
-  //   path: '/my-pack/:id',
-  //   element: <MyDeck />,
-  // },
-  // {
-  //   path: '/friends-pack/:id',
+  //   path: '/friends-deck/:id',
   //   element: <FriendsMyDeck />,
   // },
   // {
-  //   path: '/empty-pack/:name/:id',
+  //   path: '/empty-deck/:name/:id',
   //   element: <EmptyMyDeck />,
   // },
   // {
-  //   path: '/learn-pack/:id',
+  //   path: '/learn-deck/:id',
   //   element: <LearnMyDeck />,
   // },
   {
