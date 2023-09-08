@@ -1,0 +1,21 @@
+.answerBlock {
+  display: flex;
+  flex-direction: column;
+
+  .title {
+    margin-bottom: 0.75rem;
+    text-align: start;
+  }
+
+  .answer {
+    display: inline-block;
+  }
+
+  .grade {
+    margin-bottom: 0.81rem;
+  }
+
+  .radio {
+    margin-bottom: 1.81rem;
+  }
+}
