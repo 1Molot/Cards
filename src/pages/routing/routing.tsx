@@ -12,7 +12,7 @@ import { ConfirmationEmail } from '../../featchers/confirmation-email/confirmati
 import { Loader } from '../../shared/lib'
 import { DecksList } from '../decks-list'
 import { EmptyDeck } from '../empty-deck'
-import { LearnDeck, Profile } from '../index.ts'
+import { FriendsDeck, LearnDeck, Profile } from '../index.ts'
 import { Login } from '../login/login.tsx'
 import { MyDeck } from '../my-deck/my-deck.tsx'
 
@@ -52,10 +52,10 @@ const privateRoutes: RouteObject[] = [
     path: '/my-deck/:id',
     element: <MyDeck />,
   },
-  // {
-  //   path: '/friends-deck/:id',
-  //   element: <FriendsDeck />,
-  // },
+  {
+    path: '/friends-deck/:id',
+    element: <FriendsDeck />,
+  },
   {
     path: '/empty-deck/:name/:id',
     element: <EmptyDeck />,
