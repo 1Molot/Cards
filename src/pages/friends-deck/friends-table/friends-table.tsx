@@ -3,16 +3,12 @@ import { FC } from 'react'
 import { CardsResponse } from '../../../featchers'
 import { Grade, Sort, TableElement } from '../../../shared/ui'
 import { HeaderTable } from '../../header-table'
+import { Column } from '../../my-deck'
 
 type PropsType = {
   dataCards: CardsResponse | undefined
   sort: Sort
   setSort: (value: Sort) => void
-}
-export type Column = {
-  key: string
-  title: string
-  sortable?: boolean
 }
 
 const columns: Array<Column> = [

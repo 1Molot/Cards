@@ -1,5 +1,5 @@
 import { baseApi } from '../../../../shared/api'
-import { DeckType, DecksResponse, GetDecksArgs, LearnDeckResponse } from '../type'
+import { DecksResponse, Deck, GetDecksArgs, LearnDeckResponse } from '../type'
 
 const decksApi = baseApi.injectEndpoints({
   endpoints: builder => {
@@ -14,7 +14,7 @@ const decksApi = baseApi.injectEndpoints({
         },
         providesTags: ['Decks'],
       }),
-      getDeck: builder.query<DeckType, { id: string | undefined }>({
+      getDeck: builder.query<Deck, { id: string | undefined }>({
         query: ({ id }) => ({
           url: `v1/decks/${id}`,
           method: 'GET',

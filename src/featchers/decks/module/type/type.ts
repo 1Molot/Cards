@@ -8,12 +8,6 @@ export type GetDecksArgs = PaginatedRequest<{
   orderBy?: string | null
 }>
 
-// export type DecksResponse = {
-//   maxCardsCount: number
-//   pagination: Pagination
-//   items: DeckType[]
-// }
-
 export type DecksResponse = PaginatedEntity<Deck> & {
   maxCardsCount: number
 }
