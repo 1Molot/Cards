@@ -13,7 +13,7 @@ import { Loader } from '../../shared/lib'
 import { DecksList } from '../decks-list'
 import { EmptyDeck } from '../empty-deck'
 import { FriendsDeck, LearnDeck, Profile } from '../index.ts'
-import { Login } from '../login/login.tsx'
+import { Login } from '../login'
 import { MyDeck } from '../my-deck/my-deck.tsx'
 
 const publicRoutes: RouteObject[] = [
