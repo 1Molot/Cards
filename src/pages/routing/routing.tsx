@@ -1,4 +1,10 @@
-import { Navigate, Outlet, RouteObject, RouterProvider, createHashRouter } from 'react-router-dom'
+import {
+  createBrowserRouter,
+  Navigate,
+  Outlet,
+  RouteObject,
+  RouterProvider,
+} from 'react-router-dom'
 
 import { BaseLayout } from '../../app/layouts/base-layout.tsx'
 import { CheckEmail, CreateNewPassword, ForgotPassword, SignUp, useMeQuery } from '../../featchers'
@@ -64,23 +70,18 @@ const privateRoutes: RouteObject[] = [
   },
 ]
 
-const router = createHashRouter(
-  [
-    {
-      element: <BaseLayout />,
-      children: [
-        {
-          element: <PrivateRoutes />,
-          children: privateRoutes,
-        },
-        ...publicRoutes,
-      ],
-    },
-  ],
+const router = createBrowserRouter([
   {
-    basename: import.meta.env.BASE_URL,
-  }
-)
+    element: <BaseLayout />,
+    children: [
+      {
+        element: <PrivateRoutes />,
+        children: privateRoutes,
+      },
+      ...publicRoutes,
+    ],
+  },
+])
 
 export const Router = () => {
   return <RouterProvider router={router} />
